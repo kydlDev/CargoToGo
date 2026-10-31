@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    CargoToGo mod. Everything shared by the user's mods (references from Claude\ref, net48, no debug symbols, the shared code Kydl.Common, the KydlCore
+    reference, copy to Assets + build + the Gale test profile) comes from Claude\shared\Kydl.Mod.props / .targets. Only what is special about this mod is below.
+    Build: dotnet build "CargoToGo-Mod\CargoToGo.csproj" -c Release
+  -->
+  <Import Project="..\..\Claude\shared\Kydl.Mod.props" />
+
+  <PropertyGroup>
+    <AssemblyName>CargoToGo</AssemblyName>
+    <RootNamespace>CargoToGo</RootNamespace>
+    <PackageId>CargoToGo</PackageId>
+    <!-- 2.0.0: the KY hub (F6, the Settings tab with every config entry) and the shared log come from KydlCore (a hard dependency) -->
+    <KydlUseCore>true</KydlUseCore>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Splatform: the platform layer of the game (used by the key hint bar) -->
+    <Reference Include="Splatform"><HintPath>$(ValheimRefs)\Splatform.dll</HintPath><Private>false</Private></Reference>
+    <!-- Optional dependency (soft): referenced only to compile against its public API, never copied next to CargoToGo.dll -->
+    <Reference Include="AzuCraftyBoxes"><HintPath>$(ValheimRefs)\AzuCraftyBoxes.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <Import Project="..\..\Claude\shared\Kydl.Mod.targets" />
+</Project>
