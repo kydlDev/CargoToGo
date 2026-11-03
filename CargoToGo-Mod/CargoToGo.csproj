@@ -12,7 +12,15 @@
     <PackageId>CargoToGo</PackageId>
     <!-- 2.0.0: the KY hub (F6, the Settings tab with every config entry) and the shared log come from KydlCore (a hard dependency) -->
     <KydlUseCore>true</KydlUseCore>
+    <!-- KydlDev spec layout (MIGRATION_DECISIONS A8): the DLL goes to assets\ only -->
+    <KydlBuildFolder>false</KydlBuildFolder>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="tests\**;docs\**;release\**" />
+    <None Remove="tests\**;docs\**;release\**" />
+    <EmbeddedResource Remove="tests\**;docs\**;release\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <!-- Splatform: the platform layer of the game (used by the key hint bar) -->

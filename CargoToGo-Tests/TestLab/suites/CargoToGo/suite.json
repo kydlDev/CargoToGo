@@ -1,8 +1,0 @@
-{
-  "name": "CargoToGo",
-  "description": "CargoToGo: starts clean, its Settings tab is in the KY hub, the cargo items exist (KydlCore D-084: every mod ships a suite)",
-  "requireMods": [ { "guid": "com.kydldev.CargoToGo" } ],
-  "configOverrides": [],
-  "resetBetweenTests": true,
-  "tests": [ "startup-clean", "hub-page" ]
-}

@@ -1,0 +1,13 @@
+{
+  "name": "build-menu",
+  "description": "Key hints, the Cargos tab and the real Ctrl+Alt clicks (cannot be pressed by the lab)",
+  "manualOnly": true,
+  "timeout": 600,
+  "steps": [
+    { "do": "hook", "name": "CargoToGo.arena", "contains": "arena at", "label": "start on the arena spot" },
+    { "do": "checkpoint", "message": "Open the build menu: is there a 5th Cargos tab, and do the Pack cargo / Repack hints show in the key hint bar?" },
+    { "do": "checkpoint", "message": "Select a wood piece, Ctrl+Alt + left click: a cargo appears in the inventory and the materials are gone. Ctrl+Alt + right click on it: materials come back." },
+    { "do": "checkpoint", "message": "Build the piece from the cargo, then Alt + destroy it: do you get the cargo back? Die with a cargo: is it in the gravestone?" }
+  ],
+  "asserts": [ { "check": "noErrors", "source": "CargoToGo" } ]
+}

@@ -85,3 +85,9 @@ CLAUDE.md
 
 # test-quality output (coverage, Stryker): rebuilt by _agent/tools/test-quality.ps1
 /*-Tests/_quality/
+
+# --- local only docs (KydlDev spec) ---
+/*-Mod/docs/
+/*-Mod/tests/.nuget/
+/*-Mod/tests/**/obj/
+/*-Mod/tests/**/bin/

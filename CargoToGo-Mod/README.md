@@ -51,21 +51,27 @@ The config file is generated on first launch at `BepInEx/config/com.kydldev.Carg
 
 | Setting | Default | Description |
 |---|---|---|
-| `ContainerRange` | `20` | Radius in metres to search for chests when packing. `0` turns CargoToGo's own search off (combine with `UseAzuCraftyBoxes` to rely only on AzuCraftyBoxes' range). |
-| `PullFromContainers` | `true` | Allow packing materials from nearby chests. |
-| `UseAzuCraftyBoxes` | `true` | Also pack from containers reached by AzuCraftyBoxes, if installed. Needs `PullFromContainers`. |
-| `ContainersFirst` | `true` | Take materials from chests before your inventory. |
-| `PackInWorld` | `true` | Ctrl + Alt + Left click in the world packs a cargo instead of placing the piece. |
-| `AltDestroyAnyPiece` | `false` | Alt + Destroy returns a cargo even for pieces that were not built from one. |
-| `PackEffects` | `true` | Play build dust, sound and the piece's break effect when packing. |
-| `ShowKeyHints` | `true` | Show the Pack cargo / Repack hints in the build-mode key hint bar. |
-| `ShowCargoTab` | `true` | Add the Cargos tab to the build menu. Needs a game restart. |
-| `WeightMultiplier` | `1` | Cargo weight = weight of its contents × this value. Needs a game restart. |
-| `VerboseLogging` | `false` | Also write DEBUG lines to the BepInEx log. |
+| `General` / `EnableAll` | `true` | Master switch. Off = no packing, repacking, key hints or Cargos tab; cargos you already carry stay safe and can still be unpacked. |
+| `General` / `WeightMultiplier` | `1` | Cargo weight = weight of its contents x this value. Needs a game restart. |
+| `Containers` / `Enable` | `true` | Allow packing materials from nearby chests. |
+| `Containers` / `Range` | `20` | Radius in metres to search for chests when packing. `0` turns CargoToGo's own search off (combine with `UseAzuCraftyBoxes` to rely only on AzuCraftyBoxes' range). |
+| `Containers` / `UseAzuCraftyBoxes` | `true` | Also pack from containers reached by AzuCraftyBoxes, if installed. Needs `Containers` / `Enable`. |
+| `Containers` / `ContainersFirst` | `true` | Take materials from chests before your inventory. |
+| `PackInWorld` / `Enable` | `true` | Ctrl + Alt + Left click in the world packs a cargo instead of placing the piece. |
+| `Repack` / `Enable` | `true` | Alt + Destroy turns a piece that was built from a cargo back into a cargo. |
+| `Repack` / `AnyPiece` | `false` | Alt + Destroy returns a cargo even for pieces that were not built from one. |
+| `Effects` / `Enable` | `true` | Play build dust, sound and the piece's break effect when packing. |
+| `KeyHints` / `Enable` | `true` | Show the Pack cargo / Repack hints in the build-mode key hint bar. |
+| `CargoTab` / `Enable` | `true` | Add the Cargos tab to the build menu. Needs a game restart. |
+| `DebugLog` / `Enable` | `false` | Also write DEBUG lines to the BepInEx log. |
+
+## Multiplayer
+
+CargoToGo changes items and pieces, so everyone on a server (and the server itself) must run the same CargoToGo version; a client with a different version is refused. The settings are read from each player's own config.
 
 ## Troubleshooting
 
-Log lines from this mod are tagged `CargoToGo` in `BepInEx/LogOutput.log`. If something goes wrong, enable `VerboseLogging` and include the CargoToGo lines when reporting an issue.
+Log lines from this mod are tagged `CargoToGo` in `BepInEx/LogOutput.log`. If something goes wrong, enable `DebugLog` and include the CargoToGo lines when reporting an issue.
 
 Every death that involves cargos logs a line such as `Death of <name>: 3 cargo(s) moved to the gravestone.` If you lose a cargo on death, that line (or a warning in its place) is the first thing to include in your report.
 

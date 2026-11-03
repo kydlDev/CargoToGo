@@ -1,0 +1,103 @@
+{
+    "name":  "CargoToGo",
+    "description":  "CargoToGo 2.0.0 (KydlDev spec port): features run, hub tab, pack/unpack conserves materials, cargo stays in the inventory, death -\u003e grave -\u003e take-all",
+    "requireMods":  [
+                        {
+                            "guid":  "com.kydldev.CargoToGo",
+                            "minVersion":  "2.0.0"
+                        },
+                        {
+                            "guid":  "com.kydldev.KydlCore",
+                            "minVersion":  "0.1.0"
+                        }
+                    ],
+    "configOverrides":  [
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "General",
+                                "key":  "EnableAll",
+                                "value":  true
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "General",
+                                "key":  "WeightMultiplier",
+                                "value":  1
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "Containers",
+                                "key":  "Enable",
+                                "value":  true
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "Containers",
+                                "key":  "Range",
+                                "value":  20
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "Containers",
+                                "key":  "UseAzuCraftyBoxes",
+                                "value":  true
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "Containers",
+                                "key":  "ContainersFirst",
+                                "value":  true
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "PackInWorld",
+                                "key":  "Enable",
+                                "value":  true
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "Repack",
+                                "key":  "Enable",
+                                "value":  true
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "Repack",
+                                "key":  "AnyPiece",
+                                "value":  false
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "Effects",
+                                "key":  "Enable",
+                                "value":  true
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "KeyHints",
+                                "key":  "Enable",
+                                "value":  true
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "CargoTab",
+                                "key":  "Enable",
+                                "value":  true
+                            },
+                            {
+                                "guid":  "com.kydldev.CargoToGo",
+                                "section":  "DebugLog",
+                                "key":  "Enable",
+                                "value":  false
+                            }
+                        ],
+    "resetBetweenTests":  true,
+    "tests":  [
+                  "startup-clean",
+                  "hub-page",
+                  "features-running",
+                  "pack-unpack",
+                  "cargo-stays-in-inventory",
+                  "death-gravestone"
+              ]
+}
