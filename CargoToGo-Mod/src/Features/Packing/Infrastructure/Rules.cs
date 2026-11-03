@@ -1,7 +1,6 @@
-using Kydl.Common;
-using UnityEngine;
+using KydlCore.Common;
 
-namespace CargoToGo
+namespace CargoToGo.Features.Packing.Infrastructure
 {
     // ---------------------------------------------------------------- cargo stays in the player's inventory
     internal static class Rules

@@ -1,9 +1,11 @@
-using Kydl.Common;
 using System;
+using CargoToGo.Configuration;
+using CargoToGo.Features.Packing.Infrastructure;
 using HarmonyLib;
+using KydlCore.Common;
 using UnityEngine;
 
-namespace CargoToGo
+namespace CargoToGo.Integrations.Harmony
 {
     // MIGRATION_DECISIONS A5: every Harmony patch lives in src/Integrations/Harmony. ALT + destroy turns a piece back into a cargo (feature Repack: [Repack] Enable).
     // ---------------------------------------------------------------- ALT + destroy -> back into a cargo

@@ -1,6 +1,10 @@
-using Kydl.Common;
+using KydlCore.Common;
 using System.Collections.Generic;
 using System.Text;
+using CargoToGo.Configuration;
+using CargoToGo.Features.Packing.Domain;
+using CargoToGo.Features.Packing.Infrastructure;
+using CargoToGo.Shared;
 
 namespace CargoToGo.Testing
 {
@@ -26,9 +30,11 @@ namespace CargoToGo.Testing
         /// KydlCore (hard dependency) is loaded: it owns the KY hub (F6) with this mod's Settings tab.
         static string Startup_CoreLoaded()
         {
-            bool loaded = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(KydlCore.Plugin.ModGuid);
+            bool loaded = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(KydlCore.Bootstrap.Plugin.ModGuid);
             ModLog.Verbose("InGameTests: Startup_CoreLoaded " + loaded);
-            return loaded ? "PASS: " + KydlCore.Plugin.ModGuid + " is loaded" : "FAIL: " + KydlCore.Plugin.ModGuid + " is not loaded (this mod requires it)";
+            return loaded ? "PASS: " + KydlCore.Bootstrap.Plugin.ModGuid + " is loaded" : "FAIL: " +
+                KydlCore.Bootstrap.Plugin.ModGuid +
+                " is not loaded (this mod requires it)";
         }
 
         /// All player-facing texts are registered (a missing key would show as the raw key in game).

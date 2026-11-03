@@ -1,10 +1,12 @@
-using Kydl.Common;
 using System.Collections.Generic;
 using System.Text;
+using CargoToGo.Configuration;
+using CargoToGo.Features.Packing.Domain;
 using HarmonyLib;
+using KydlCore.Common;
 using UnityEngine;
 
-namespace CargoToGo
+namespace CargoToGo.Features.Packing.Infrastructure
 {
     /// <summary>Creates one cargo item prefab per buildable piece (CC_Cargo_[piece prefab]).
     /// The contents of a cargo are implicit: exactly the piece's m_resources.</summary>
@@ -190,7 +192,7 @@ namespace CargoToGo
             return null;
         }
 
-        private static readonly Dictionary<string, Piece> TablePieces = new Dictionary<string, Piece>();
+        private static readonly Dictionary<string, Piece> TablePieces = new();
 
         /// <summary>The piece a cargo stands for. Looked up in ZNetScene first; pieces that are not networked prefabs
         /// (the terrain tools raise_v2 / paved_road_v2, ...) are not there, so the hammer's piece tables are searched too.

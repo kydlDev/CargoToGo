@@ -1,24 +1,25 @@
-using Kydl.Common;
 using System;
 using System.Collections.Generic;
+using CargoToGo.Configuration;
+using KydlCore.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CargoToGo
+namespace CargoToGo.Features.KeyHints.Infrastructure
 {
     /// <summary>Adds "Pack cargo" / "Repack" hints to the build-mode key hint bar.
     /// The hints are built from scratch (own layout groups) but copy font, colour and key-chip sprite
     /// from an existing hint of the vanilla bar, and sit in a row directly above that bar.</summary>
     internal static class KeyHintUi
     {
-        private static KeyHints _builtFor;
+        private static global::KeyHints _builtFor;
         private static GameObject _row, _packHint, _repackHint;
         private static TMP_Text _packKey, _repackKey;
         private static bool _disabled;
         private static int _lastRefresh;
 
-        public static void Tick(KeyHints kh)
+        public static void Tick(global::KeyHints kh)
         {
             if (_disabled || kh == null) return;
             try
@@ -48,7 +49,7 @@ namespace CargoToGo
         }
 
         // ------------------------------------------------------------------ build
-        private static bool Build(KeyHints kh)
+        private static bool Build(global::KeyHints kh)
         {
             var bh = kh.m_buildHints;
             TMP_Text label = null, key = null;

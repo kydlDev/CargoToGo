@@ -5,9 +5,9 @@ using CargoToGo.Features.KeyHints.Infrastructure;
 using CargoToGo.Features.Packing.Infrastructure;
 using CargoToGo.Features.Repack.Infrastructure;
 using CargoToGo.Presentation.Hub.Registration;
-using Kydl.Common;
-using Kydl.Core.Features;
-using Kydl.Core.Results;
+using KydlCore.Common;
+using CargoToGo.Core;
+using KydlCore.Core;
 
 namespace CargoToGo.Bootstrap
 {

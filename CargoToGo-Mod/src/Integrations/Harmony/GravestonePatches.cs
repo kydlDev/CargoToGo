@@ -1,10 +1,12 @@
-using Kydl.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using CargoToGo.Features.Gravestone.Infrastructure;
+using CargoToGo.Features.Packing.Infrastructure;
 using HarmonyLib;
+using KydlCore.Common;
 
-namespace CargoToGo
+namespace CargoToGo.Integrations.Harmony
 {
     // MIGRATION_DECISIONS A5: the gravestone hooks of feature Gravestone; the state and decisions are in GravestoneTracker (why: see the comment there).
 

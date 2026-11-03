@@ -1,5 +1,5 @@
-using Kydl.Common;
-using Kydl.Core.Features;
+using KydlCore.Core;
+using KydlCore.Common;
 
 namespace CargoToGo.Features.Gravestone.Infrastructure
 {

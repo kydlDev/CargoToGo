@@ -1,7 +1,7 @@
 using BepInEx.Configuration;
-using Kydl.Common;
+using KydlCore.Common;
 
-namespace CargoToGo
+namespace CargoToGo.Configuration
 {
     /// <summary>The player config (PROJECT_RULES 11): [General] EnableAll switches the whole mod, every functionality has its own
     /// [Section] Enable, [DebugLog] Enable adds detail lines to the log. All entries also show on the mod's Settings tab in the KY hub.</summary>

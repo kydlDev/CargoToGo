@@ -1,8 +1,9 @@
-using Kydl.Common;
 using System;
+using CargoToGo.Features.CargoTab.Infrastructure;
 using HarmonyLib;
+using KydlCore.Common;
 
-namespace CargoToGo
+namespace CargoToGo.Integrations.Harmony
 {
     // MIGRATION_DECISIONS A5: the hammer menu hooks of feature CargoTab; the work is CargoTab.Install / CargoTab.Tick.
     // ---------------------------------------------------------------- hooks

@@ -1,13 +1,14 @@
-using Kydl.Common;
 using System;
 using System.Collections.Generic;
 using AzuCraftyBoxes.IContainers;
 using AzuCraftyBoxes.Util;
 using BepInEx.Bootstrap;
+using CargoToGo.Configuration;
 using HarmonyLib;
+using KydlCore.Common;
 using UnityEngine;
 
-namespace CargoToGo
+namespace CargoToGo.Features.Packing.Infrastructure
 {
     /// <summary>Safe to touch whether or not AzuCraftyBoxes is installed: nothing in this class references Azu types.</summary>
     internal static class AzuCompat

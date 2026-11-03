@@ -1,12 +1,14 @@
-using Kydl.Common;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using CargoToGo.Configuration;
+using CargoToGo.Features.Packing.Domain;
 using HarmonyLib;
+using KydlCore.Common;
 using UnityEngine;
 
-namespace CargoToGo
+namespace CargoToGo.Features.Packing.Infrastructure
 {
     internal static class Packer
     {
@@ -19,7 +21,7 @@ namespace CargoToGo
 
         private static readonly MethodInfo CheckAccess = AccessTools.Method(typeof(Container), "CheckAccess");
         private static int _cacheFrame = -1;
-        private static List<Container> _cache = new List<Container>();
+        private static List<Container> _cache = new();
         private static float _lastPack;
 
         public static void Say(Player p, string text)
@@ -55,7 +57,7 @@ namespace CargoToGo
         }
 
         private static int _sourcesFrame = -1;
-        private static List<Source> _sourcesCache = new List<Source>();
+        private static List<Source> _sourcesCache = new();
 
         /// <summary>Everything a cargo may take materials from, in the order they are used:
         /// chests (CargoToGo's own radius first, then whatever AzuCraftyBoxes reaches) and the player's inventory.

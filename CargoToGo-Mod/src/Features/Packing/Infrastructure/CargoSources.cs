@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CargoToGo
+namespace CargoToGo.Features.Packing.Infrastructure
 {
     internal enum SourceKind { Inventory, Chest, Azu }
 

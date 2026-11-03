@@ -1,7 +1,8 @@
-using Kydl.Common;
 using System;
+using CargoToGo.Features.Packing.Infrastructure;
+using KydlCore.Common;
 
-namespace CargoToGo
+namespace CargoToGo.Features.Gravestone.Infrastructure
 {
     // ====================================================================================================
     // Cargos and death.

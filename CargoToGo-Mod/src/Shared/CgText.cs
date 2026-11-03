@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
-namespace CargoToGo
+namespace CargoToGo.Shared
 {
-    /// <summary>All player-facing texts of CargoToGo (English). Registered with the shared Kydl.Common.Loc; keys start with cg_.</summary>
+    /// <summary>All player-facing texts of CargoToGo (English). Registered with the shared KydlCore.Common.Loc; keys start with cg_.</summary>
     internal static class CgText
     {
-        public static readonly Dictionary<string, string> En = new Dictionary<string, string>
+        public static readonly Dictionary<string, string> En = new()
         {
             { "cg_cant_pack", "This piece can't be packed into a cargo." },
             { "cg_no_slot", "No free inventory slot for a cargo." },

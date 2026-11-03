@@ -1,6 +1,6 @@
 using System;
 
-namespace CargoToGo
+namespace CargoToGo.Features.Packing.Domain
 {
     /// <summary>The rules of a cargo that need no game: how a requirement is split over the sources in order,
     /// and how cargo prefab names relate to piece prefab names. Kept free of Unity / Valheim types so unit tests cover it.</summary>

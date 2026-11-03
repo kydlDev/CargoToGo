@@ -1,9 +1,9 @@
-using Kydl.Common;
 using System;
+using CargoToGo.Features.Packing.Infrastructure;
 using HarmonyLib;
-using UnityEngine;
+using KydlCore.Common;
 
-namespace CargoToGo
+namespace CargoToGo.Integrations.Harmony
 {
     // MIGRATION_DECISIONS A5: every Harmony patch lives in src/Integrations/Harmony. A cargo stays in the player's own inventory; Ctrl+Alt + right click unpacks it; portal rules (Rules in Features/Packing).
     [HarmonyPatch(typeof(Inventory), nameof(Inventory.AddItem), new[] { typeof(ItemDrop.ItemData) })]

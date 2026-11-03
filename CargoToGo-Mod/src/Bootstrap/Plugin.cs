@@ -1,15 +1,16 @@
-using Kydl.Common;
 using System;
 using BepInEx;
-using BepInEx.Configuration;
-using CargoToGo.Bootstrap;
+using CargoToGo.Configuration;
+using CargoToGo.Features.Packing.Infrastructure;
+using CargoToGo.Shared;
 using Jotunn.Utils;
+using KydlCore.Common;
 
-namespace CargoToGo
+namespace CargoToGo.Bootstrap
 {
     [BepInPlugin(ModGuid, ModName, ModVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
-    [BepInDependency(KydlCore.Plugin.ModGuid, "0.1.0")]
+    [BepInDependency(KydlCore.Bootstrap.Plugin.ModGuid, "0.1.0")]
     [BepInDependency(AzuCompat.Guid, BepInDependency.DependencyFlags.SoftDependency)]
     // client-side mod: players without it can join (they just cannot take cargos out of a death grave); when a client and the server both have it the version must match
     [NetworkCompatibility(CompatibilityLevel.VersionCheckOnly, VersionStrictness.Patch)]

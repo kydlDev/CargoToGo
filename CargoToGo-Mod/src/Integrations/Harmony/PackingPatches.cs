@@ -1,9 +1,10 @@
-using Kydl.Common;
 using System;
+using CargoToGo.Configuration;
+using CargoToGo.Features.Packing.Infrastructure;
 using HarmonyLib;
-using UnityEngine;
+using KydlCore.Common;
 
-namespace CargoToGo
+namespace CargoToGo.Integrations.Harmony
 {
     // MIGRATION_DECISIONS A5: every Harmony patch lives in src/Integrations/Harmony. Packing and building with a cargo (feature Packing: [PackInWorld] Enable). Decisions live in Packer / CargoFactory / PlaceState.
     [HarmonyPatch(typeof(Player), nameof(Player.TryPlacePiece))]

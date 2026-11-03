@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using CargoToGo.Features.Packing.Infrastructure;
 using HarmonyLib;
-using Kydl.Common;
+using KydlCore.Common;
 using UnityEngine;
 
-namespace CargoToGo.Testing
+namespace CargoToGo.Testing.TestHooks
 {
     /// <summary>
     /// KydlCore D-084: hooks for DrakesTestLab suites (CargoToGo-Mod/tests/TestLab/suites/CargoToGo). A hook is a static method with [TestHook("name")]; DrakesTestLab finds it by the
@@ -63,7 +64,7 @@ namespace CargoToGo.Testing
         {
             var p = Player.m_localPlayer;
             Container best = null; float bestD = 1e9f;
-            foreach (var stone in Object.FindObjectsOfType<TombStone>())
+            foreach (var stone in Object.FindObjectsByType<TombStone>(FindObjectsSortMode.InstanceID))
             {
                 var c = stone.GetComponent<Container>();
                 if (c == null) continue;
@@ -118,7 +119,7 @@ namespace CargoToGo.Testing
             var p = Player.m_localPlayer; var cargo = p != null ? FirstCargo(p.GetInventory(), piece) : null;
             if (cargo == null) return true;
             Container chest = null; float best = 1e9f;
-            foreach (var c in Object.FindObjectsOfType<Container>())
+            foreach (var c in Object.FindObjectsByType<Container>(FindObjectsSortMode.InstanceID))
             {
                 if (c.GetComponent<TombStone>() != null) continue;
                 float d = (c.transform.position - p.transform.position).sqrMagnitude;
@@ -180,7 +181,7 @@ namespace CargoToGo.Testing
         static int ClearGraves()
         {
             var p = Player.m_localPlayer; int n = 0;
-            foreach (var stone in Object.FindObjectsOfType<TombStone>())
+            foreach (var stone in Object.FindObjectsByType<TombStone>(FindObjectsSortMode.InstanceID))
             {
                 if (p != null && (stone.transform.position - p.transform.position).sqrMagnitude > 50f * 50f) continue;
                 var nv = stone.GetComponent<ZNetView>();

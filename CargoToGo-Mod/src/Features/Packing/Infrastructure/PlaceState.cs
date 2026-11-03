@@ -1,7 +1,4 @@
-using Kydl.Common;
-using UnityEngine;
-
-namespace CargoToGo
+namespace CargoToGo.Features.Packing.Infrastructure
 {
     // ---------------------------------------------------------------- building with cargo
     internal static class PlaceState

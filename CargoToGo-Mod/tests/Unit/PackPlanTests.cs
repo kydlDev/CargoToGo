@@ -1,3 +1,4 @@
+using CargoToGo.Features.Packing.Domain;
 using System;
 using System.Linq;
 using FsCheck;

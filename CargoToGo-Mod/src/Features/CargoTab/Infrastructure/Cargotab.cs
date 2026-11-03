@@ -1,12 +1,14 @@
-using Kydl.Common;
 using System;
 using System.Collections.Generic;
+using CargoToGo.Configuration;
+using CargoToGo.Features.Packing.Infrastructure;
 using HarmonyLib;
+using KydlCore.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CargoToGo
+namespace CargoToGo.Features.CargoTab.Infrastructure
 {
     // ====================================================================================================
     // The 5th tab ("Cargos") of the hammer / build menu.

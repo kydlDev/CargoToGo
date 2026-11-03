@@ -1,5 +1,6 @@
 using BepInEx.Configuration;
-using Kydl.Common;
+using CargoToGo.Bootstrap;
+using KydlCore.Common;
 
 namespace CargoToGo.Presentation.Hub.Registration
 {
@@ -10,16 +11,16 @@ namespace CargoToGo.Presentation.Hub.Registration
 
         internal static bool RegisterModPage(ConfigFile config)
         {
-            global::KydlCore.KyHub.SetModTitle(CargoToGoPlugin.ModGuid, "Cargo To Go");
-            var tab = global::KydlCore.KyHub.AddTab(CargoToGoPlugin.ModGuid, SettingsId, "Settings", () => global::KydlCore.KyHub.ConfigEntries(config), 0);
+            global::KydlCore.Features.Hub.Contracts.KyHub.SetModTitle(CargoToGoPlugin.ModGuid, "Cargo To Go");
+            var tab = global::KydlCore.Features.Hub.Contracts.KyHub.AddTab(CargoToGoPlugin.ModGuid, SettingsId, "Settings", () => global::KydlCore.Features.Hub.Contracts.KyHub.ConfigEntries(config), 0);
             ModLog.Verbose("HubTabs: settings tab " + (tab != null ? "registered" : "FAILED"));
             return tab != null;
         }
 
         internal static bool UnregisterModPage()
         {
-            global::KydlCore.KyHub.RemoveTab(CargoToGoPlugin.ModGuid, SettingsId);
-            return !global::KydlCore.KyHub.HasTab(CargoToGoPlugin.ModGuid, SettingsId);
+            global::KydlCore.Features.Hub.Contracts.KyHub.RemoveTab(CargoToGoPlugin.ModGuid, SettingsId);
+            return !global::KydlCore.Features.Hub.Contracts.KyHub.HasTab(CargoToGoPlugin.ModGuid, SettingsId);
         }
     }
 }
