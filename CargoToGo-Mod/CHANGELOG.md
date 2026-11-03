@@ -4,7 +4,7 @@
 
 - Internal port to the KydlDev spec (new folder layout, KydlCore feature registry, one hub tab, TestLab suite). No change to gameplay or to the config file.
 - Not tested in game yet: only the TestLab suite and the unit/integration tests have run.
-- Network: CargoToGo now requires everyone on a server to run the same version (EveryoneMustHaveMod, patch-strict).
+- Network: CargoToGo stays a client-side mod (nobody is required to have it), but a server that has it now refuses clients that have a different version (`VersionCheckOnly`, patch-strict). Players without CargoToGo can still join; they cannot take cargos out of a death gravestone.
 - Breaking: CargoToGo now needs the KydlCore mod (hard dependency; the mod manager installs it).
 - All settings are now also on the **CargoToGo > Settings** tab of the KY hub (F6), with the same controls as the config file.
 - Log lines now use the shared KydlDev format (`VerboseLogging` still switches the detail lines on).

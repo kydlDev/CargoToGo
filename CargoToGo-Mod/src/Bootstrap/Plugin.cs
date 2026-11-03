@@ -11,8 +11,8 @@ namespace CargoToGo
     [BepInDependency(Jotunn.Main.ModGuid)]
     [BepInDependency(KydlCore.Plugin.ModGuid, "0.1.0")]
     [BepInDependency(AzuCompat.Guid, BepInDependency.DependencyFlags.SoftDependency)]
-    // changes items and pieces of the shared world: everyone needs the mod, the exact same version (MIGRATION_DECISIONS network rule)
-    [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Patch)]
+    // client-side mod: players without it can join (they just cannot take cargos out of a death grave); when a client and the server both have it the version must match
+    [NetworkCompatibility(CompatibilityLevel.VersionCheckOnly, VersionStrictness.Patch)]
     public class CargoToGoPlugin : BaseUnityPlugin
     {
         public const string ModGuid = "com.kydldev.CargoToGo";   // also the config file name: com.kydldev.CargoToGo.cfg

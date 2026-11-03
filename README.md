@@ -67,7 +67,7 @@ The config file is generated on first launch at `BepInEx/config/com.kydldev.Carg
 
 ## Multiplayer
 
-CargoToGo changes items and pieces, so everyone on a server (and the server itself) must run the same CargoToGo version; a client with a different version is refused. The settings are read from each player's own config.
+CargoToGo is a client-side mod: nobody on a server is required to have it. If the server and a player both have it, the versions must match exactly (a player with a different version is refused). Players without CargoToGo can join, but they cannot take cargos out of a death gravestone. The settings are read from each player's own config.
 
 ## Troubleshooting
 
