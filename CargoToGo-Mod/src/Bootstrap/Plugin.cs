@@ -10,7 +10,7 @@ namespace CargoToGo.Bootstrap;
 
 [BepInPlugin(ModGuid, ModName, ModVersion)]
 [BepInDependency(Jotunn.Main.ModGuid)]
-[BepInDependency(KydlCore.Bootstrap.Plugin.ModGuid, "0.1.0")]
+[BepInDependency(KydlCore.Bootstrap.Plugin.ModGuid, "1.0.0")]
 [BepInDependency(AzuCompat.Guid, BepInDependency.DependencyFlags.SoftDependency)]
 // client-side mod: players without it can join (they just cannot take cargos out of a death grave); when a client and the server both have it the version must match
 [NetworkCompatibility(CompatibilityLevel.VersionCheckOnly, VersionStrictness.Patch)]
