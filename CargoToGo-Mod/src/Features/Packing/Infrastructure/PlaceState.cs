@@ -1,10 +1,9 @@
-namespace CargoToGo.Features.Packing.Infrastructure
+namespace CargoToGo.Features.Packing.Infrastructure;
+
+// ---------------------------------------------------------------- building with cargo
+internal static class PlaceState
 {
-    // ---------------------------------------------------------------- building with cargo
-    internal static class PlaceState
-    {
-        public static Piece Piece;
-        public static ItemDrop.ItemData Cargo;
-        public static void Clear() { Piece = null; Cargo = null; }
-    }
+    public static Piece Piece;
+    public static ItemDrop.ItemData Cargo;
+    public static void Clear() { Piece = null; Cargo = null; }
 }
