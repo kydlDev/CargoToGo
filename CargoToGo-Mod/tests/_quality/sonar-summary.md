@@ -1,15 +1,15 @@
-﻿# SonarQube CargoToGo - OK (Medium/High impact issues: 0; Sonar server gate: ERROR)
+﻿# SonarQube CargoToGo - OK (Medium/High impact issues: 0; Sonar server gate: OK)
 
-Run 2026-11-04 12:24:33, http://localhost:9000/dashboard?id=CargoToGo
+Run 2026-11-04 17:31:23, http://localhost:9000/dashboard?id=CargoToGo
 
 | Measure | Value |
 |---|---|
-| branch_coverage | 2.6 |
+| branch_coverage | 2.8 |
 | bugs | 0 |
-| code_smells | 12 |
-| coverage | 2.6 |
+| code_smells | 0 |
+| coverage | 2.7 |
 | duplicated_lines_density | 0.0 |
-| line_coverage | 2.5 |
+| line_coverage | 2.6 |
 | ncloc | 2051 |
 | reliability_rating | 1.0 |
 | security_hotspots | 0 |
@@ -17,17 +17,5 @@ Run 2026-11-04 12:24:33, http://localhost:9000/dashboard?id=CargoToGo
 | sqale_rating | 1.0 |
 | vulnerabilities | 0 |
 
-## Open issues (12), most severe first
+## Open issues (0), most severe first
 
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/PackPlanTests.cs :151 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/PackPlanTests.cs :36 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/PackPlanTests.cs :134 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/PackPlanTests.cs :43 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/TunableTests.cs :81 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/PackPlanTests.cs :77 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/TunableTests.cs :73 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/PackPlanTests.cs :127 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/PackPlanTests.cs :144 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/PackPlanTests.cs :50 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/PackPlanTests.cs :57 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
-- [INFO CODE_SMELL] CargoToGo-Mod/tests/Unit/TunableTests.cs :41 - Call independent Assert statements from inside an Assert.Multiple (external_roslyn:NUnit2045)
