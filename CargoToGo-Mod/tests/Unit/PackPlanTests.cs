@@ -33,30 +33,42 @@ public class PackPlanTests
     [Test]
     public void Allocate_NothingWanted_TakesNothing()
     {
-        Assert.That(PackPlan.Allocate(new[] { 5, 5 }, 0), Is.EqualTo(new[] { 0, 0 }));
-        Assert.That(PackPlan.Allocate(new[] { 5, 5 }, -3), Is.EqualTo(new[] { 0, 0 }));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(PackPlan.Allocate(new[] { 5, 5 }, 0), Is.EqualTo(new[] { 0, 0 }));
+            Assert.That(PackPlan.Allocate(new[] { 5, 5 }, -3), Is.EqualTo(new[] { 0, 0 }));
+        }
     }
 
     [Test]
     public void Allocate_NoSources_IsEmpty()
     {
-        Assert.That(PackPlan.Allocate(null, 5), Is.Empty);
-        Assert.That(PackPlan.Allocate(new int[0], 5), Is.Empty);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(PackPlan.Allocate(null, 5), Is.Empty);
+            Assert.That(PackPlan.Allocate(new int[0], 5), Is.Empty);
+        }
     }
 
     [Test]
     public void Covers_BoundaryIsInclusive()
     {
-        Assert.That(PackPlan.Covers(new[] { 2, 3 }, 5), Is.True);
-        Assert.That(PackPlan.Covers(new[] { 2, 3 }, 6), Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(PackPlan.Covers(new[] { 2, 3 }, 5), Is.True);
+            Assert.That(PackPlan.Covers(new[] { 2, 3 }, 6), Is.False);
+        }
     }
 
     [Test]
     public void Covers_NothingWanted_IsAlwaysTrue_EvenWithoutSources()
     {
-        Assert.That(PackPlan.Covers(null, 0), Is.True);
-        Assert.That(PackPlan.Covers(new int[0], -1), Is.True);
-        Assert.That(PackPlan.Covers(null, 1), Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(PackPlan.Covers(null, 0), Is.True);
+            Assert.That(PackPlan.Covers(new int[0], -1), Is.True);
+            Assert.That(PackPlan.Covers(null, 1), Is.False);
+        }
     }
 
     [Test]
@@ -74,10 +86,13 @@ public class PackPlanTests
     [Test]
     public void Shortfall_IsWhatIsMissing_NeverNegative()
     {
-        Assert.That(PackPlan.Shortfall(10, new[] { 4, 3 }), Is.EqualTo(3));
-        Assert.That(PackPlan.Shortfall(10, new[] { 10 }), Is.EqualTo(0));
-        Assert.That(PackPlan.Shortfall(10, new[] { 99 }), Is.EqualTo(0));
-        Assert.That(PackPlan.Shortfall(10, null), Is.EqualTo(10));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(PackPlan.Shortfall(10, new[] { 4, 3 }), Is.EqualTo(3));
+            Assert.That(PackPlan.Shortfall(10, new[] { 10 }), Is.EqualTo(0));
+            Assert.That(PackPlan.Shortfall(10, new[] { 99 }), Is.EqualTo(0));
+            Assert.That(PackPlan.Shortfall(10, null), Is.EqualTo(10));
+        }
     }
 
     [Test]
@@ -124,34 +139,46 @@ public class CargoNamesTests
     [Test]
     public void CargoFor_ThenPieceOf_RoundTrips()
     {
-        Assert.That(CargoNames.PieceOf(CargoNames.CargoFor("piece_workbench")), Is.EqualTo("piece_workbench"));
-        Assert.That(CargoNames.CargoFor("stone_wall_2x1"), Is.EqualTo("CC_Cargo_stone_wall_2x1"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(CargoNames.PieceOf(CargoNames.CargoFor("piece_workbench")), Is.EqualTo("piece_workbench"));
+            Assert.That(CargoNames.CargoFor("stone_wall_2x1"), Is.EqualTo("CC_Cargo_stone_wall_2x1"));
+        }
     }
 
     [Test]
     public void IsCargo_NeedsThePrefixAndAPieceName()
     {
-        Assert.That(CargoNames.IsCargo("CC_Cargo_x"), Is.True);
-        Assert.That(CargoNames.IsCargo("CC_Cargo_"), Is.False);
-        Assert.That(CargoNames.IsCargo("Wood"), Is.False);
-        Assert.That(CargoNames.IsCargo(""), Is.False);
-        Assert.That(CargoNames.IsCargo(null), Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(CargoNames.IsCargo("CC_Cargo_x"), Is.True);
+            Assert.That(CargoNames.IsCargo("CC_Cargo_"), Is.False);
+            Assert.That(CargoNames.IsCargo("Wood"), Is.False);
+            Assert.That(CargoNames.IsCargo(""), Is.False);
+            Assert.That(CargoNames.IsCargo(null), Is.False);
+        }
     }
 
     [Test]
     public void IsCargo_IsCaseSensitive_AndNeedsThePrefixAtTheStart()
     {
-        Assert.That(CargoNames.IsCargo("cc_cargo_x"), Is.False);
-        Assert.That(CargoNames.IsCargo("X_CC_Cargo_x"), Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(CargoNames.IsCargo("cc_cargo_x"), Is.False);
+            Assert.That(CargoNames.IsCargo("X_CC_Cargo_x"), Is.False);
+        }
     }
 
     [Test]
     public void PieceOf_NotACargo_IsNull_NeverThrows()
     {
-        Assert.That(CargoNames.PieceOf("Wood"), Is.Null);
-        Assert.That(CargoNames.PieceOf("CC_"), Is.Null);
-        Assert.That(CargoNames.PieceOf(null), Is.Null);
-        Assert.That(CargoNames.PieceOf("CC_Cargo_"), Is.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(CargoNames.PieceOf("Wood"), Is.Null);
+            Assert.That(CargoNames.PieceOf("CC_"), Is.Null);
+            Assert.That(CargoNames.PieceOf(null), Is.Null);
+            Assert.That(CargoNames.PieceOf("CC_Cargo_"), Is.Null);
+        }
     }
 
     [Test]
