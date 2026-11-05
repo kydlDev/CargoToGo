@@ -2,6 +2,7 @@
 
 ## 2.0.0
 
+- Tested in game with the full TestLab suite (6 tests): 3 green runs in a row on 2026-11-05, plus the ecosystem run with all 12 KydlDev mods loaded together.
 - Internal port to the KydlDev spec (new folder layout, KydlCore feature registry, one hub tab, TestLab suite). No change to gameplay or to the config file.
 - Checked in game on 2026-11-04 (clean start and quit with all mods loaded, no errors from this mod).
 - Network: CargoToGo stays a client-side mod (nobody is required to have it), but a server that has it now refuses clients that have a different version (`VersionCheckOnly`, patch-strict). Players without CargoToGo can still join; they cannot take cargos out of a death gravestone.
