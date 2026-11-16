@@ -4,7 +4,7 @@ using KydlCore.Core;
 
 namespace CargoToGo.Features.CargoTab.Infrastructure;
 
-/// <summary>The 5th Cargos tab of the build menu. Gate: [General] EnableAll and [CargoTab] Enable. The tab is built when the build menu is created, so a change needs a game restart (as the setting says).</summary>
+/// <summary>The 5th Cargos tab of the build menu. Gate: [General] Enable mod and [CargoTab] Enable. The tab is built when the build menu is created, so a change needs a game restart (as the setting says).</summary>
 internal sealed class CargoTabFeature : IFeature
 {
     internal const string FeatureId = "cargo-tab";

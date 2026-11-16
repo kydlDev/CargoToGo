@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.1
+
+- Changed: needs KydlCore 1.1.1 or newer (the KY hub shows every settings category of the mod as its own tab).
+- Changed: all the **Enable** switches are now together in `[General]` and have new names: `Enable mod` (was `EnableAll`) and `Enable Containers`, `Enable Pack In World`, `Enable Repack`, `Enable Effects`, `Enable Key Hints`, `Enable Cargo Tab` (each was `Enable` in its own section). The values you had set are taken over; the old entries are removed from your config file.
+
 ## 2.0.0
 
 - Tested in game with the full TestLab suite (6 tests): 3 green runs in a row on 2026-11-05, plus the ecosystem run with all 12 KydlDev mods loaded together.

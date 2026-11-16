@@ -4,18 +4,18 @@
     "requireMods":  [
                         {
                             "guid":  "com.kydldev.CargoToGo",
-                            "minVersion":  "2.0.0"
+                            "minVersion":  "2.0.1"
                         },
                         {
                             "guid":  "com.kydldev.KydlCore",
-                            "minVersion":  "1.0.0"
+                            "minVersion":  "1.1.1"
                         }
                     ],
     "configOverrides":  [
                             {
                                 "guid":  "com.kydldev.CargoToGo",
                                 "section":  "General",
-                                "key":  "EnableAll",
+                                "key":  "Enable mod",
                                 "value":  true
                             },
                             {
@@ -26,8 +26,8 @@
                             },
                             {
                                 "guid":  "com.kydldev.CargoToGo",
-                                "section":  "Containers",
-                                "key":  "Enable",
+                                "section":  "General",
+                                "key":  "Enable Containers",
                                 "value":  true
                             },
                             {
@@ -50,14 +50,14 @@
                             },
                             {
                                 "guid":  "com.kydldev.CargoToGo",
-                                "section":  "PackInWorld",
-                                "key":  "Enable",
+                                "section":  "General",
+                                "key":  "Enable Pack In World",
                                 "value":  true
                             },
                             {
                                 "guid":  "com.kydldev.CargoToGo",
-                                "section":  "Repack",
-                                "key":  "Enable",
+                                "section":  "General",
+                                "key":  "Enable Repack",
                                 "value":  true
                             },
                             {
@@ -68,20 +68,20 @@
                             },
                             {
                                 "guid":  "com.kydldev.CargoToGo",
-                                "section":  "Effects",
-                                "key":  "Enable",
+                                "section":  "General",
+                                "key":  "Enable Effects",
                                 "value":  true
                             },
                             {
                                 "guid":  "com.kydldev.CargoToGo",
-                                "section":  "KeyHints",
-                                "key":  "Enable",
+                                "section":  "General",
+                                "key":  "Enable Key Hints",
                                 "value":  true
                             },
                             {
                                 "guid":  "com.kydldev.CargoToGo",
-                                "section":  "CargoTab",
-                                "key":  "Enable",
+                                "section":  "General",
+                                "key":  "Enable Cargo Tab",
                                 "value":  true
                             },
                             {

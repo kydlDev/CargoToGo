@@ -4,7 +4,7 @@ using KydlCore.Core;
 
 namespace CargoToGo.Features.Repack.Infrastructure;
 
-/// <summary>ALT + destroy turns a piece back into a cargo. Gate: [General] EnableAll and [Repack] Enable.</summary>
+/// <summary>ALT + destroy turns a piece back into a cargo. Gate: [General] Enable mod and [Repack] Enable.</summary>
 internal sealed class RepackFeature : IFeature
 {
     internal const string FeatureId = "repack";

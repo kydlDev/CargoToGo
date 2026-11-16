@@ -20,11 +20,11 @@ internal static class InGameTests
         return bound ? "PASS: config bound (ContainerRange " + ModSettings.ContainerRange.Value + " m, weight x" + ModSettings.WeightMultiplier.Value + ")" : "FAIL: the config entries are not bound";
     }
 
-    /// The config rule (PROJECT_RULES 11): [General] EnableAll and [DebugLog] Enable exist, the mod is on.
+    /// The config rule (PROJECT_RULES 11): [General] Enable mod and [DebugLog] Enable exist, the mod is on.
     static string Startup_ConfigRules()
     {
-        if (ModSettings.EnableAll == null || ModSettings.DebugLog == null) return "FAIL: ModSettings.Bind did not run (EnableAll / DebugLog null)";
-        return ModSettings.On ? "PASS: EnableAll on, debug log " + ModSettings.DebugLog.Value : "SKIP: EnableAll is off in the config";
+        if (ModSettings.EnableMod == null || ModSettings.DebugLog == null) return "FAIL: ModSettings.Bind did not run (EnableMod / DebugLog null)";
+        return ModSettings.On ? "PASS: EnableMod on, debug log " + ModSettings.DebugLog.Value : "SKIP: EnableMod is off in the config";
     }
 
     /// KydlCore (hard dependency) is loaded: it owns the KY hub (F6) with this mod's Settings tab.

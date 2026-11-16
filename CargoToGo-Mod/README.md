@@ -51,7 +51,7 @@ The config file is generated on first launch at `BepInEx/config/com.kydldev.Carg
 
 | Setting | Default | Description |
 |---|---|---|
-| `General` / `EnableAll` | `true` | Master switch. Off = no packing, repacking, key hints or Cargos tab; cargos you already carry stay safe and can still be unpacked. |
+| `General` / `Enable mod` | `true` | Master switch. Off = no packing, repacking, key hints or Cargos tab; cargos you already carry stay safe and can still be unpacked. |
 | `General` / `WeightMultiplier` | `1` | Cargo weight = weight of its contents x this value. Needs a game restart. |
 | `Containers` / `Enable` | `true` | Allow packing materials from nearby chests. |
 | `Containers` / `Range` | `20` | Radius in metres to search for chests when packing. `0` turns CargoToGo's own search off (combine with `UseAzuCraftyBoxes` to rely only on AzuCraftyBoxes' range). |
