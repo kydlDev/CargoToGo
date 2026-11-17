@@ -1,6 +1,6 @@
 ﻿# SonarQube CargoToGo - OK (Medium/High impact issues: 0; Sonar server gate: OK)
 
-Run 2026-11-17 07:44:05, http://localhost:9000/dashboard?id=CargoToGo
+Run 2026-11-17 09:51:54, http://localhost:9000/dashboard?id=CargoToGo
 
 | Measure | Value |
 |---|---|
