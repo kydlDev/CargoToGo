@@ -51,8 +51,7 @@ The config file is generated on first launch at `BepInEx/config/com.kydldev.Carg
 
 | Setting | Default | Description |
 |---|---|---|
-| `General` / `Enable mod` | `true` | Master switch. Off = no packing, repacking, key hints or Cargos tab; cargos you already carry stay safe and can still be unpacked. |
-| `General` / `WeightMultiplier` | `1` | Cargo weight = weight of its contents x this value. Needs a game restart. |
+| `General` / `Enable Mod` | `true` | Master switch. Off = no packing, repacking, key hints or Cargos tab; cargos you already carry stay safe and can still be unpacked. |
 | `Containers` / `Enable` | `true` | Allow packing materials from nearby chests. |
 | `Containers` / `Range` | `20` | Radius in metres to search for chests when packing. `0` turns CargoToGo's own search off (combine with `UseAzuCraftyBoxes` to rely only on AzuCraftyBoxes' range). |
 | `Containers` / `UseAzuCraftyBoxes` | `true` | Also pack from containers reached by AzuCraftyBoxes, if installed. Needs `Containers` / `Enable`. |
@@ -63,6 +62,7 @@ The config file is generated on first launch at `BepInEx/config/com.kydldev.Carg
 | `Effects` / `Enable` | `true` | Play build dust, sound and the piece's break effect when packing. |
 | `KeyHints` / `Enable` | `true` | Show the Pack cargo / Repack hints in the build-mode key hint bar. |
 | `CargoTab` / `Enable` | `true` | Add the Cargos tab to the build menu. Needs a game restart. |
+| `General` / `Weight multiplier` | `1` | Cargo weight = weight of its contents x this value. Needs a game restart. |
 | `DebugLog` / `Enable` | `false` | Also write DEBUG lines to the BepInEx log. |
 
 ## Multiplayer

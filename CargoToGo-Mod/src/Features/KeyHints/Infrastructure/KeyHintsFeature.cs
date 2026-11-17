@@ -4,7 +4,7 @@ using KydlCore.Core;
 
 namespace CargoToGo.Features.KeyHints.Infrastructure;
 
-/// <summary>The Pack cargo / Repack hints in the build-mode key hint bar. Gate: [General] Enable mod and [KeyHints] Enable. KeyHintUi hides its row on the next tick when the gate closes.</summary>
+/// <summary>The Pack cargo / Repack hints in the build-mode key hint bar. Gate: [General] Enable Mod and [KeyHints] Enable. KeyHintUi hides its row on the next tick when the gate closes.</summary>
 internal sealed class KeyHintsFeature : IFeature
 {
     internal const string FeatureId = "key-hints";

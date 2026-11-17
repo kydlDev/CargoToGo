@@ -4,7 +4,7 @@ using KydlCore.Core;
 
 namespace CargoToGo.Features.Packing.Infrastructure;
 
-/// <summary>Pack the materials of a piece into a cargo (Ctrl+Alt + click) and build with a cargo. Gate: [General] Enable mod and [PackInWorld] Enable. The patches (Integrations/Harmony/PackingPatches) check the same settings on every call.</summary>
+/// <summary>Pack the materials of a piece into a cargo (Ctrl+Alt + click) and build with a cargo. Gate: [General] Enable Mod and [PackInWorld] Enable. The patches (Integrations/Harmony/PackingPatches) check the same settings on every call.</summary>
 internal sealed class PackingFeature : IFeature
 {
     internal const string FeatureId = "packing";

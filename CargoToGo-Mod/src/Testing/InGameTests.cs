@@ -20,7 +20,7 @@ internal static class InGameTests
         return bound ? "PASS: config bound (ContainerRange " + ModSettings.ContainerRange.Value + " m, weight x" + ModSettings.WeightMultiplier.Value + ")" : "FAIL: the config entries are not bound";
     }
 
-    /// The config rule (PROJECT_RULES 11): [General] Enable mod and [DebugLog] Enable exist, the mod is on.
+    /// The config rule (PROJECT_RULES 11): [General] Enable Mod and [DebugLog] Enable exist, the mod is on.
     static string Startup_ConfigRules()
     {
         if (ModSettings.EnableMod == null || ModSettings.DebugLog == null) return "FAIL: ModSettings.Bind did not run (EnableMod / DebugLog null)";

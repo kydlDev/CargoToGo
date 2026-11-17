@@ -3,7 +3,7 @@ using KydlCore.Core;
 
 namespace CargoToGo.Features.Gravestone.Infrastructure;
 
-/// <summary>Cargos survive death: they move to the gravestone and back. Always on, even with [General] Enable mod off: a cargo you hold must never be lost (the setting text says so), so this feature has no Enable entry of its own.</summary>
+/// <summary>Cargos survive death: they move to the gravestone and back. Always on, even with [General] Enable Mod off: a cargo you hold must never be lost (the setting text says so), so this feature has no Enable entry of its own.</summary>
 internal sealed class GravestoneFeature : IFeature
 {
     internal const string FeatureId = "gravestone";
