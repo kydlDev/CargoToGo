@@ -193,7 +193,8 @@ public class LoggingRulesTests
             List<LogStatement> logs = LogStatements(lines);
             for (int i = 0; i < lines.Length; i++)
             {
-                string code = Code(lines[i]);
+                // the word "catch" inside a string literal (a config description) is not a catch block (ChestSnapping 2026-11-26)
+                string code = Regex.Replace(Code(lines[i]), "\"([^\"\\\\]|\\\\.)*\"", "\"\"");
                 Match c = Catch.Match(code);
                 if (!c.Success || !Regex.IsMatch(code, @"(^|[\s}])catch\b")) continue;
                 string variable = c.Groups[2].Value;
