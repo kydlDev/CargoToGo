@@ -9,7 +9,8 @@
 - Fixed: the README listed the old setting names; it now shows the `[General] Enable ...` names the config file uses since 2.0.1.
 
 ### Testing
-- Not tested in game yet (TestLab run pending).
+- Unit tests: 27 passed. Integration tests: 49 passed (including the new logging, diagnostics and FAQ rule tests).
+- In game with DrakesTestLab: the full suite of 6 tests on this build, all green (2026-11-26, run t118-ctg), with all KydlDev mods loaded; no errors and no warnings from CargoToGo.
 
 ## 2.0.1
 
