@@ -2,7 +2,7 @@
 
 ## 2.0.2
 
-- Changed: needs KydlCore 1.1.3 or newer.
+- Changed: needs KydlCore 1.2.0 or newer; Jotunn is no longer needed (the version check on joining a server comes from KydlCore, as before: only when both sides have the mod the versions must match).
 - Changed: much more detailed debug log (`[DebugLog] Enable`): every step says what it did and with which values, every early stop says why, and frequent lines are throttled so the log stays readable.
 - Changed: when CargoToGo stops you from dropping a cargo, KydlCore's flight recorder keeps where you were and how many cargos you carried, so a bug report after a problem shows what happened.
 - Docs: the README is shorter; the how-to and troubleshooting answers are now in the mod's FAQ (14 questions).
@@ -10,7 +10,7 @@
 
 ### Testing
 - Unit tests: 27 passed. Integration tests: 49 passed (including the new logging, diagnostics and FAQ rule tests).
-- In game with DrakesTestLab: the full suite of 6 tests on this build, all green (2026-11-26, run t118-ctg), with all KydlDev mods loaded; no errors and no warnings from CargoToGo.
+- In game with DrakesTestLab: the full suite of 6 tests on this build, all green (2026-11-26, run t116-ctg), with all KydlDev mods loaded; no errors and no warnings from CargoToGo.
 
 ## 2.0.1
 

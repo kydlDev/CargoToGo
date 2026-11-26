@@ -3,17 +3,14 @@ using BepInEx;
 using CargoToGo.Configuration;
 using CargoToGo.Features.Packing.Infrastructure;
 using CargoToGo.Shared;
-using Jotunn.Utils;
 using KydlCore.Common;
 
 namespace CargoToGo.Bootstrap;
 
 [BepInPlugin(ModGuid, ModName, ModVersion)]
-[BepInDependency(Jotunn.Main.ModGuid)]
-[BepInDependency(KydlCore.Bootstrap.Plugin.ModGuid, "1.1.3")]
+[BepInDependency(KydlCore.Bootstrap.Plugin.ModGuid, "1.2.0")]
 [BepInDependency(AzuCompat.Guid, BepInDependency.DependencyFlags.SoftDependency)]
-// client-side mod: players without it can join (they just cannot take cargos out of a death grave); when a client and the server both have it the version must match
-[NetworkCompatibility(CompatibilityLevel.VersionCheckOnly, VersionStrictness.Patch)]
+// Network check: ModSync.cs (KydlCore 1.2.0 KyNetwork, ClientOnly; no Jotunn - MIGRATION_PLAN part 0).
 public class CargoToGoPlugin : BaseUnityPlugin
 {
     public const string ModGuid = "com.kydldev.CargoToGo";   // also the config file name: com.kydldev.CargoToGo.cfg
@@ -27,6 +24,7 @@ public class CargoToGoPlugin : BaseUnityPlugin
         ModLog.Init(Logger, ModName, () => ModSettings.Verbose);
         Loc.Register(CgText.En);
         ModSettings.Bind(Config);
+        int adminShared = ModSync.ShareAdminOnly(Config);     // network check + server-decided settings (KydlCore KyNetwork)
         CargoToGo.Core.RuleLog.Sink = ModLog.Verbose;                   // the pure code logs through ModLog (PROJECT_RULES 8, KydlCore D-103)
         CargoToGo.Core.RuleLog.DebugOn = () => ModSettings.Verbose;
 
