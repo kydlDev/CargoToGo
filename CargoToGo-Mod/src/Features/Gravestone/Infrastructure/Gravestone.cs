@@ -1,6 +1,7 @@
 using System;
 using CargoToGo.Features.Packing.Infrastructure;
 using KydlCore.Common;
+using CargoToGo.Core;
 
 namespace CargoToGo.Features.Gravestone.Infrastructure;
 
@@ -40,10 +41,11 @@ internal static class GravestoneTracker
     /// <summary>Expected outcome: the number of cargo items in the inventory (0 for null).</summary>
     internal static int CountCargos(Inventory inv)
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"GravestoneTracker.CountCargos(inv={inv})");
         var n = 0;
-        if (inv == null) return 0;
+        if (inv == null) { if (RuleLog.IsOn()) ModLog.Verbose($"GravestoneTracker.CountCargos: returns 0 (line 46) - inputs (inv={inv})"); return 0; }
         foreach (var it in inv.GetAllItems()) if (CargoFactory.IsCargo(it)) n++;
-        return n;
+        { var returnedAt48 = n; if (RuleLog.IsOn()) ModLog.Verbose($"GravestoneTracker.CountCargos: returns {returnedAt48} (line 48)"); return returnedAt48; }
     }
 
     /// <summary>Called before Player.CreateTombStone. Expected outcome: true (the caller hands it to <see cref="End"/>; the rule is switched off until then).</summary>
@@ -64,9 +66,9 @@ internal static class GravestoneTracker
         if (began) Rules.AllowDepth--;
         try
         {
-            if (!Active) return;
+            if (!Active) { if (RuleLog.IsOn()) ModLog.Verbose($"GravestoneTracker.End: returns (line 69) - inputs (player={player}, began={began})"); return; }
             Active = false;
-            if (Before == 0 && InGrave <= 0) return;   // no cargos involved
+            if (Before == 0 && InGrave <= 0) { if (RuleLog.IsOn()) ModLog.Verbose($"GravestoneTracker.End: returns (line 71) - inputs (player={player}, began={began})"); return; }   // no cargos involved
             var left = CountCargos(player.GetInventory());
             var who = Packer.PName(player);
             if (left == 0 && InGrave == Before)
@@ -83,7 +85,7 @@ internal static class GravestoneTracker
     {
         try
         {
-            if (!Active) return;
+            if (!Active) { if (RuleLog.IsOn()) ModLog.Verbose($"GravestoneTracker.SetupDone: returns (line 88) - inputs (stone={stone})"); return; }
             var container = stone.GetComponent<Container>();
             var inv = container != null ? container.GetInventory() : null;
             InGrave = CountCargos(inv);

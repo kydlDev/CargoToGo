@@ -1,70 +1,79 @@
 {
-    "name":  "death-gravestone",
-    "description":  "Death: the cargo goes into the grave, survives a grave reload, cannot be dropped to the ground and comes back with take-all",
-    "timeout":  90,
-    "steps":  [
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.arena",
-                      "contains":  "arena at"
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.clearGraves"
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.giveMaterials",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "contains":  "gave"
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.pack",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "expect":  true
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.makeGrave",
-                      "contains":  "cargos in grave 1"
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.reloadGrave",
-                      "expect":  1
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.dropFromGrave",
-                      "expect":  false
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.graveCargos",
-                      "expect":  1
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.takeAllFromGrave",
-                      "expect":  1
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.clearGraves"
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.unpack",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "expect":  true
-                  }
-              ],
-    "asserts":  [ { "check": "noErrors", "source": "CargoToGo" } ]
+  "name": "death-gravestone",
+  "description": "Death: the cargo goes into the grave, survives a grave reload, cannot be dropped to the ground and comes back with take-all",
+  "timeout": 90,
+  "steps": [
+    {
+      "do": "hook",
+      "name": "CargoToGo.arena",
+      "contains": "arena at"
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.clearGraves"
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.giveMaterials",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "contains": "gave"
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.pack",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "expect": true
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.makeGrave",
+      "contains": "cargos in grave 1"
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.reloadGrave",
+      "expect": 1
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.dropFromGrave",
+      "expect": false
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.graveCargos",
+      "expect": 1
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.takeAllFromGrave",
+      "expect": 1
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.clearGraves"
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.unpack",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "expect": true
+    },
+    {
+      "do": "console",
+      "command": "killall"
+    }
+  ],
+  "asserts": [
+    {
+      "check": "noErrors",
+      "source": "CargoToGo"
+    }
+  ]
 }

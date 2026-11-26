@@ -7,6 +7,7 @@ using CargoToGo.Configuration;
 using HarmonyLib;
 using KydlCore.Common;
 using UnityEngine;
+using CargoToGo.Core;
 
 namespace CargoToGo.Features.Packing.Infrastructure;
 
@@ -48,11 +49,11 @@ internal static class AzuBridge
         var result = new List<Source>();
         try
         {
-            if (p == null || Prevented(p)) return result;
+            if (p == null || Prevented(p)) { var returnedAt52 = result; if (RuleLog.IsOn()) ModLog.Every("AzuBridge.Collect:52", 2d, $"AzuBridge.Collect: returns {returnedAt52} (line 52)"); return returnedAt52; }
 
             // Azu returns a shared list that it clears and refills later, so wrap the entries immediately.
             var containers = AzuCraftyBoxes.API.GetNearbyContainers(p, AzuCraftyBoxes.AzuCraftyBoxesPlugin.mRange.Value);
-            if (containers == null) return result;
+            if (containers == null) { var returnedAt56 = result; if (RuleLog.IsOn()) ModLog.Every("AzuBridge.Collect:56", 2d, $"AzuBridge.Collect: returns {returnedAt56} (line 56)"); return returnedAt56; }
 
             foreach (var c in containers)
             {
@@ -70,13 +71,13 @@ internal static class AzuBridge
                 ModLog.Error("AzuCraftyBoxes lookup failed, continuing without it (logged once)" + " | " + e);
             }
         }
-        return result;
+        { var returnedAt74 = result; if (RuleLog.IsOn()) ModLog.Every("AzuBridge.Collect:74", 2d, $"AzuBridge.Collect: returns {returnedAt74} (line 74)"); return returnedAt74; }
     }
 
     /// <summary>Resolves the two Azu internals we mirror (pull on/off gate and "leave one item"). Both are optional.</summary>
     private static void Resolve()
     {
-        if (_resolved) return;
+        if (_resolved) { if (RuleLog.IsOn()) ModLog.Every("AzuBridge.Resolve:80", 2d, $"AzuBridge.Resolve: already resolved ({_resolved}), nothing to do"); return; }
         _resolved = true;
         try
         {
@@ -100,8 +101,8 @@ internal static class AzuBridge
         Resolve();
         try
         {
-            if (_shouldPrevent != null) return _shouldPrevent();
-            return !p.IsPullingAllowed();
+            if (_shouldPrevent != null) { var returnedAt104 = _shouldPrevent(); if (RuleLog.IsOn()) ModLog.Every("AzuBridge.Prevented:104", 2d, $"AzuBridge.Prevented: returns {returnedAt104} (line 104)"); return returnedAt104; }
+            { var returnedAt105 = !p.IsPullingAllowed(); if (RuleLog.IsOn()) ModLog.Every("AzuBridge.Prevented:105", 2d, $"AzuBridge.Prevented: returns {returnedAt105} (line 105)"); return returnedAt105; }
         }
         catch (Exception e)
         {
@@ -113,26 +114,27 @@ internal static class AzuBridge
     /// <summary>Azu's "leave one" option keeps one of each item in every container.</summary>
     private static int LeaveOne(int count)
     {
+        if (RuleLog.IsOn()) ModLog.Every("AzuBridge.LeaveOne", 2d, $"AzuBridge.LeaveOne(count={count})");
         Resolve();
-        return _leaveOne != null ? _leaveOne(count) : count;
+        { var returnedAt119 = _leaveOne != null ? _leaveOne(count) : count; if (RuleLog.IsOn()) ModLog.Every("AzuBridge.LeaveOne:119", 2d, $"AzuBridge.LeaveOne: returns {returnedAt119} (line 119)"); return returnedAt119; }
     }
 
     /// <summary>Chests need their ZDO ownership claimed before items are removed (same as CargoToGo does for its own
     /// chests). Azu's wrapper does not expose the Container, so it is found again through its inventory.</summary>
     private static void ClaimOwnership(IContainer c)
     {
-        if (!(c is VanillaContainer)) return; // drawers claim ownership themselves, bags live in the player's inventory
+        if (!(c is VanillaContainer)) { if (RuleLog.IsOn()) ModLog.Every("AzuBridge.ClaimOwnership:126", 2d, $"AzuBridge.ClaimOwnership: returns (line 126) - inputs (c={c})"); return; } // drawers claim ownership themselves, bags live in the player's inventory
         try
         {
             var inv = c.GetInventory();
-            if (inv == null) return;
+            if (inv == null) { if (RuleLog.IsOn()) ModLog.Every("AzuBridge.ClaimOwnership:130", 2d, $"AzuBridge.ClaimOwnership: returns (line 130) - inputs (c={c})"); return; }
             foreach (var col in Physics.OverlapSphere(c.GetPosition(), 3f))
             {
                 var cont = col.GetComponentInParent<Container>();
                 if (cont == null || cont.GetInventory() != inv) continue;
                 var nv = cont.GetComponent<ZNetView>();
                 if (nv != null && nv.IsValid()) nv.ClaimOwnership();
-                return;
+                { if (RuleLog.IsOn()) ModLog.Every("AzuBridge.ClaimOwnership:137", 2d, $"AzuBridge.ClaimOwnership: returns (line 137) - inputs (c={c})"); return; }
             }
             ModLog.Verbose("Could not locate the chest at " + c.GetPosition() + " to claim ownership.");
         }
@@ -158,10 +160,10 @@ internal static class AzuBridge
             {
                 var c = (IContainer)_box;
                 var containerPrefab = c.GetPrefabName();
-                if (string.IsNullOrWhiteSpace(containerPrefab)) return 0;
+                if (string.IsNullOrWhiteSpace(containerPrefab)) { if (RuleLog.IsOn()) ModLog.Every("AzuSource.Count:163", 2d, $"AzuSource.Count: returns 0 (line 163) - inputs (sharedName={sharedName}, itemPrefab={itemPrefab})"); return 0; }
                 // Azu's per-container include/exclude rules (Azumatt.AzuCraftyBoxes.yml).
-                if (!AzuCraftyBoxes.API.CanItemBePulled(containerPrefab, itemPrefab)) return 0;
-                return Mathf.Max(0, LeaveOne(c.ItemCount(sharedName)));
+                if (!AzuCraftyBoxes.API.CanItemBePulled(containerPrefab, itemPrefab)) { if (RuleLog.IsOn()) ModLog.Every("AzuSource.Count:165", 2d, $"AzuSource.Count: returns 0 (line 165) - inputs (sharedName={sharedName}, itemPrefab={itemPrefab})"); return 0; }
+                { var returnedAt166 = Mathf.Max(0, LeaveOne(c.ItemCount(sharedName))); if (RuleLog.IsOn()) ModLog.Every("AzuSource.Count:166", 2d, $"AzuSource.Count: returns {returnedAt166} (line 166)"); return returnedAt166; }
             }
             catch (Exception e)
             {
@@ -176,11 +178,11 @@ internal static class AzuBridge
             {
                 var c = (IContainer)_box;
                 var take = Mathf.Min(amount, Count(sharedName, itemPrefab));
-                if (take <= 0) return 0;
+                if (take <= 0) { if (RuleLog.IsOn()) ModLog.Every("AzuSource.Take:181", 2d, $"AzuSource.Take: returns 0 (line 181) - inputs (sharedName={sharedName}, itemPrefab={itemPrefab}, amount={amount})"); return 0; }
                 ClaimOwnership(c);
                 // Same call Azu uses when crafting: (item, already removed, wanted) -> total removed so far.
                 var removed = c.ProcessContainerInventory(sharedName, 0, take);
-                return Mathf.Clamp(removed, 0, take);
+                { var returnedAt185 = Mathf.Clamp(removed, 0, take); if (RuleLog.IsOn()) ModLog.Every("AzuSource.Take:185", 2d, $"AzuSource.Take: returns {returnedAt185} (line 185)"); return returnedAt185; }
             }
             catch (Exception e)
             {

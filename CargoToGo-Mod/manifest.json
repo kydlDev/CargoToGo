@@ -1,11 +1,11 @@
 {
   "name": "CargoToGo",
-  "version_number": "2.0.1",
+  "version_number": "2.0.2",
   "website_url": "",
   "description": "Pack the materials of any build piece into a single cargo item, carry it in your inventory and build with it later. Pulls from nearby chests, supports AzuCraftyBoxes and adds a Cargos tab to the build menu.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2351",
     "ValheimModding-Jotunn-2.30.2",
-    "KydlDev-KydlCore-1.1.1"
+    "KydlDev-KydlCore-1.1.3"
   ]
 }

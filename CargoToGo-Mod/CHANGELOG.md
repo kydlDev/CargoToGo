@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.2
+
+- Changed: needs KydlCore 1.1.3 or newer.
+- Changed: much more detailed debug log (`[DebugLog] Enable`): every step says what it did and with which values, every early stop says why, and frequent lines are throttled so the log stays readable.
+- Changed: when CargoToGo stops you from dropping a cargo, KydlCore's flight recorder keeps where you were and how many cargos you carried, so a bug report after a problem shows what happened.
+- Docs: the README is shorter; the how-to and troubleshooting answers are now in the mod's FAQ (14 questions).
+- Fixed: the README listed the old setting names; it now shows the `[General] Enable ...` names the config file uses since 2.0.1.
+
+### Testing
+- Not tested in game yet (TestLab run pending).
+
 ## 2.0.1
 
 - Changed: needs KydlCore 1.1.1 or newer (the KY hub shows every settings category of the mod as its own tab).

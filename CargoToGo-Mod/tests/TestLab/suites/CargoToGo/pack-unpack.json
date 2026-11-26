@@ -1,61 +1,70 @@
 {
-    "name":  "pack-unpack",
-    "description":  "Packing a piece takes its materials and makes one cargo; unpacking gives the same materials back (quantities conserved)",
-    "timeout":  90,
-    "steps":  [
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.arena",
-                      "contains":  "arena at"
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.giveMaterials",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "contains":  "gave"
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.cargoCount",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "expect":  0
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.pack",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "expect":  true
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.cargoCount",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "expect":  1
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.unpack",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "expect":  true
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.cargoCount",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "expect":  0
-                  }
-              ],
-    "asserts":  [ { "check": "noErrors", "source": "CargoToGo" } ]
+  "name": "pack-unpack",
+  "description": "Packing a piece takes its materials and makes one cargo; unpacking gives the same materials back (quantities conserved)",
+  "timeout": 90,
+  "steps": [
+    {
+      "do": "hook",
+      "name": "CargoToGo.arena",
+      "contains": "arena at"
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.giveMaterials",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "contains": "gave"
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.cargoCount",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "expect": 0
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.pack",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "expect": true
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.cargoCount",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "expect": 1
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.unpack",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "expect": true
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.cargoCount",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "expect": 0
+    },
+    {
+      "do": "console",
+      "command": "killall"
+    }
+  ],
+  "asserts": [
+    {
+      "check": "noErrors",
+      "source": "CargoToGo"
+    }
+  ]
 }

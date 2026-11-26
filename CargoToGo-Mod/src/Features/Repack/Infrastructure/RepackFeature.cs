@@ -11,6 +11,6 @@ internal sealed class RepackFeature : IFeature
     internal static bool Running { get; private set; }
     public string Id { get { return FeatureId; } }
     public bool IsEnabled() { return ModSettings.On && ModSettings.Repack.Value; }
-    public bool Start() { Running = true; ModLog.Verbose("RepackFeature: started"); return Running; }
-    public bool Stop() { Running = false; ModLog.Verbose("RepackFeature: stopped"); return !Running; }
+    public bool Start() { Running = true; ModLog.Verbose("RepackFeature: started (running " + Running + ", gate " + IsEnabled() + ")"); return Running; }
+    public bool Stop() { Running = false; ModLog.Verbose("RepackFeature: stopped (running " + Running + ", gate " + IsEnabled() + ")"); return !Running; }
 }

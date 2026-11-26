@@ -1,4 +1,5 @@
 using KydlCore.Common;
+using CargoToGo.Core;
 
 namespace CargoToGo.Features.Packing.Infrastructure;
 
@@ -12,10 +13,11 @@ internal static class Rules
 
     public static bool Blocked(Inventory target, ItemDrop.ItemData item)
     {
-        if (AllowDepth > 0) return false;
-        if (!CargoFactory.IsCargo(item)) return false;
+        if (RuleLog.IsOn()) ModLog.Verbose($"Rules.Blocked(target={target}, item={item})");
+        if (AllowDepth > 0) { if (RuleLog.IsOn()) ModLog.Verbose($"Rules.Blocked: returns false (line 17) - inputs (target={target}, item={item})"); return false; }
+        if (!CargoFactory.IsCargo(item)) { if (RuleLog.IsOn()) ModLog.Verbose($"Rules.Blocked: returns false (line 18) - inputs (target={target}, item={item})"); return false; }
         var me = Player.m_localPlayer;
-        return me != null && target != me.GetInventory();
+        { var returnedAt20 = me != null && target != me.GetInventory(); if (RuleLog.IsOn()) ModLog.Verbose($"Rules.Blocked: returns {returnedAt20} (line 20)"); return returnedAt20; }
     }
     public static void Warn(string text)
     {

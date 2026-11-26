@@ -1,5 +1,6 @@
 using BepInEx.Configuration;
 using KydlCore.Common;
+using CargoToGo.Core;
 
 namespace CargoToGo.Configuration;
 
@@ -36,6 +37,7 @@ internal static class ModSettings
     /// given (section, key, section, key, ...) pairs that holds a bool; true when there is none.
     private static bool Old(ConfigFile c, params string[] sectionAndKey)
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"ModSettings.Old(c={c})");
         // OrphanedEntries is not a public member of every BepInEx 5 build (ConfigTools.DropRemoved reaches it the same way)
         System.Reflection.PropertyInfo orphans = typeof(ConfigFile).GetProperty("OrphanedEntries", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
         var dict = orphans != null ? orphans.GetValue(c, null) as System.Collections.IDictionary : null;
@@ -45,17 +47,18 @@ internal static class ModSettings
             bool b;
             if (dict.Contains(def) && bool.TryParse((dict[def] as string ?? "").Trim(), out b))
             {
-                return b;
+                { var returnedAt50 = b; if (RuleLog.IsOn()) ModLog.Verbose($"ModSettings.Old: returns {returnedAt50} (line 50)"); return returnedAt50; }
             }
         }
 
-        return true;
+        { if (RuleLog.IsOn()) ModLog.Verbose($"ModSettings.Old: returns true (line 54) - inputs (c={c})"); return true; }
     }
 
     /// The number the player had in an entry that was renamed (still in the file as an orphan before DropRemoved deletes it): the first of the
     /// given (section, key, section, key, ...) pairs that holds a number; the fallback when there is none.
     private static float OldFloat(ConfigFile c, float fallback, params string[] sectionAndKey)
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"ModSettings.OldFloat(c={c}, fallback={fallback})");
         System.Reflection.PropertyInfo orphans = typeof(ConfigFile).GetProperty("OrphanedEntries", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
         var dict = orphans != null ? orphans.GetValue(c, null) as System.Collections.IDictionary : null;
         for (int i = 0; dict != null && i + 1 < sectionAndKey.Length; i += 2)
@@ -64,11 +67,11 @@ internal static class ModSettings
             float f;
             if (dict.Contains(def) && float.TryParse((dict[def] as string ?? "").Trim(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out f))
             {
-                return f;
+                { var returnedAt70 = f; if (RuleLog.IsOn()) ModLog.Verbose($"ModSettings.OldFloat: returns {returnedAt70} (line 70)"); return returnedAt70; }
             }
         }
 
-        return fallback;
+        { var returnedAt74 = fallback; if (RuleLog.IsOn()) ModLog.Verbose($"ModSettings.OldFloat: returns {returnedAt74} (line 74)"); return returnedAt74; }
     }
 
     public static void Bind(ConfigFile c)

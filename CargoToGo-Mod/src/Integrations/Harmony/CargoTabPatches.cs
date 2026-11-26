@@ -5,7 +5,7 @@ using KydlCore.Common;
 
 namespace CargoToGo.Integrations.Harmony;
 
-// MIGRATION_DECISIONS A5: the hammer menu hooks of feature CargoTab; the work is CargoTab.Install / CargoTab.Tick.
+// MIGRATION_PLAN A5: the hammer menu hooks of feature CargoTab; the work is CargoTab.Install / CargoTab.Tick.
 // ---------------------------------------------------------------- hooks
 [HarmonyPatch(typeof(BuildUi), "Awake")]
 internal static class BuildUi_Awake

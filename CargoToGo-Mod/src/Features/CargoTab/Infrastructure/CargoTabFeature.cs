@@ -11,6 +11,6 @@ internal sealed class CargoTabFeature : IFeature
     internal static bool Running { get; private set; }
     public string Id { get { return FeatureId; } }
     public bool IsEnabled() { return ModSettings.On && ModSettings.ShowCargoTab.Value; }
-    public bool Start() { Running = true; ModLog.Verbose("CargoTabFeature: started"); return Running; }
-    public bool Stop() { Running = false; ModLog.Verbose("CargoTabFeature: stopped"); return !Running; }
+    public bool Start() { Running = true; ModLog.Verbose("CargoTabFeature: started (running " + Running + ", gate " + IsEnabled() + ")"); return Running; }
+    public bool Stop() { Running = false; ModLog.Verbose("CargoTabFeature: stopped (running " + Running + ", gate " + IsEnabled() + ")"); return !Running; }
 }

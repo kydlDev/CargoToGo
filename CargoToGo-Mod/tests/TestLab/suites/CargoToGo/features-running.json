@@ -1,53 +1,62 @@
 {
-    "name":  "features-running",
-    "description":  "All five features (packing, repack, key-hints, cargo-tab, gravestone) are running in the FeatureRegistry with the suite config",
-    "timeout":  90,
-    "steps":  [
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.arena",
-                      "contains":  "arena at"
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.featureRunning",
-                      "args":  {
-                                   "id":  "packing"
-                               },
-                      "expect":  true
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.featureRunning",
-                      "args":  {
-                                   "id":  "repack"
-                               },
-                      "expect":  true
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.featureRunning",
-                      "args":  {
-                                   "id":  "key-hints"
-                               },
-                      "expect":  true
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.featureRunning",
-                      "args":  {
-                                   "id":  "cargo-tab"
-                               },
-                      "expect":  true
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.featureRunning",
-                      "args":  {
-                                   "id":  "gravestone"
-                               },
-                      "expect":  true
-                  }
-              ],
-    "asserts":  [ { "check": "noErrors", "source": "CargoToGo" } ]
+  "name": "features-running",
+  "description": "All five features (packing, repack, key-hints, cargo-tab, gravestone) are running in the FeatureRegistry with the suite config",
+  "timeout": 90,
+  "steps": [
+    {
+      "do": "hook",
+      "name": "CargoToGo.arena",
+      "contains": "arena at"
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.featureRunning",
+      "args": {
+        "id": "packing"
+      },
+      "expect": true
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.featureRunning",
+      "args": {
+        "id": "repack"
+      },
+      "expect": true
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.featureRunning",
+      "args": {
+        "id": "key-hints"
+      },
+      "expect": true
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.featureRunning",
+      "args": {
+        "id": "cargo-tab"
+      },
+      "expect": true
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.featureRunning",
+      "args": {
+        "id": "gravestone"
+      },
+      "expect": true
+    },
+    {
+      "do": "console",
+      "command": "killall"
+    }
+  ],
+  "asserts": [
+    {
+      "check": "noErrors",
+      "source": "CargoToGo"
+    }
+  ]
 }

@@ -11,6 +11,6 @@ internal sealed class KeyHintsFeature : IFeature
     internal static bool Running { get; private set; }
     public string Id { get { return FeatureId; } }
     public bool IsEnabled() { return ModSettings.On && ModSettings.ShowKeyHints.Value; }
-    public bool Start() { Running = true; ModLog.Verbose("KeyHintsFeature: started"); return Running; }
-    public bool Stop() { Running = false; ModLog.Verbose("KeyHintsFeature: stopped"); return !Running; }
+    public bool Start() { Running = true; ModLog.Verbose("KeyHintsFeature: started (running " + Running + ", gate " + IsEnabled() + ")"); return Running; }
+    public bool Stop() { Running = false; ModLog.Verbose("KeyHintsFeature: stopped (running " + Running + ", gate " + IsEnabled() + ")"); return !Running; }
 }

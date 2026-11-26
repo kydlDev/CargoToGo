@@ -11,6 +11,6 @@ internal sealed class PackingFeature : IFeature
     internal static bool Running { get; private set; }
     public string Id { get { return FeatureId; } }
     public bool IsEnabled() { return ModSettings.On && ModSettings.PackInWorld.Value; }
-    public bool Start() { Running = true; ModLog.Verbose("PackingFeature: started"); return Running; }
-    public bool Stop() { Running = false; ModLog.Verbose("PackingFeature: stopped"); return !Running; }
+    public bool Start() { Running = true; ModLog.Verbose("PackingFeature: started (running " + Running + ", gate " + IsEnabled() + ")"); return Running; }
+    public bool Stop() { Running = false; ModLog.Verbose("PackingFeature: stopped (running " + Running + ", gate " + IsEnabled() + ")"); return !Running; }
 }

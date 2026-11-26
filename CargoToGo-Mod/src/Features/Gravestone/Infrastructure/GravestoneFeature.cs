@@ -10,6 +10,6 @@ internal sealed class GravestoneFeature : IFeature
     internal static bool Running { get; private set; }
     public string Id { get { return FeatureId; } }
     public bool IsEnabled() { return true; }
-    public bool Start() { Running = true; ModLog.Verbose("GravestoneFeature: started"); return Running; }
-    public bool Stop() { Running = false; ModLog.Verbose("GravestoneFeature: stopped"); return !Running; }
+    public bool Start() { Running = true; ModLog.Verbose("GravestoneFeature: started (running " + Running + ", gate " + IsEnabled() + ")"); return Running; }
+    public bool Stop() { Running = false; ModLog.Verbose("GravestoneFeature: stopped (running " + Running + ", gate " + IsEnabled() + ")"); return !Running; }
 }

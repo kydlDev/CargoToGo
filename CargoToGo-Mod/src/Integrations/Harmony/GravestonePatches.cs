@@ -5,10 +5,11 @@ using CargoToGo.Features.Gravestone.Infrastructure;
 using CargoToGo.Features.Packing.Infrastructure;
 using HarmonyLib;
 using KydlCore.Common;
+using CargoToGo.Core;
 
 namespace CargoToGo.Integrations.Harmony;
 
-// MIGRATION_DECISIONS A5: the gravestone hooks of feature Gravestone; the state and decisions are in GravestoneTracker (why: see the comment there).
+// MIGRATION_PLAN A5: the gravestone hooks of feature Gravestone; the state and decisions are in GravestoneTracker (why: see the comment there).
 
 /// <summary>Restoring saved items is not a player action. The game has two Inventory.Load overloads; both are covered
 /// (looked up by name so a changed signature in a future game version does not silently break the patch).</summary>
@@ -17,13 +18,16 @@ internal static class Inv_Load_Allow
 {
     private static IEnumerable<MethodBase> TargetMethods()
     {
-        return AccessTools.GetDeclaredMethods(typeof(Inventory)).Where(m => m.Name == "Load").Cast<MethodBase>();
+        var found = AccessTools.GetDeclaredMethods(typeof(Inventory)).Where(m => m.Name == "Load").Cast<MethodBase>().ToList();
+        if (RuleLog.IsOn()) ModLog.Verbose($"Inv_Load_Allow.TargetMethods: {found.Count} Inventory.Load method(s)");
+        return found;
     }
 
     private static bool Prepare()
     {
-        if (TargetMethods().Any()) return true;
-        ModLog.Error("Inventory.Load not found: cargos inside a gravestone can be lost when the gravestone reloads. Game version incompatible?");
+        int n = TargetMethods().Count();
+        if (n > 0) { if (RuleLog.IsOn()) ModLog.Verbose("Inv_Load_Allow.Prepare: " + n + " Inventory.Load method(s) found, patching"); return true; }
+        ModLog.Error("Inventory.Load not found (" + n + " methods): cargos inside a gravestone can be lost when the gravestone reloads. Game version incompatible?");
         return false;
     }
 

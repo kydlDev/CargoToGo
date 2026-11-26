@@ -1,4 +1,6 @@
 using UnityEngine;
+using CargoToGo.Core;
+using KydlCore.Common;
 
 namespace CargoToGo.Features.Packing.Infrastructure;
 
@@ -28,6 +30,7 @@ internal sealed class InventorySource : Source
 
     public InventorySource(Inventory inv, Container cont)
     {
+        if (RuleLog.IsOn()) ModLog.Every("InventorySource.InventorySource", 2d, $"InventorySource.InventorySource(inv={inv}, cont={cont})");
         _inv = inv;
         _cont = cont;
     }
@@ -36,15 +39,17 @@ internal sealed class InventorySource : Source
 
     public override int Count(string sharedName, string itemPrefab)
     {
-        return _inv.CountItems(sharedName, -1, true);
+        if (RuleLog.IsOn()) ModLog.Every("InventorySource.Count", 2d, $"InventorySource.Count(sharedName={sharedName}, itemPrefab={itemPrefab})");
+        { var returnedAt43 = _inv.CountItems(sharedName, -1, true); if (RuleLog.IsOn()) ModLog.Every("InventorySource.Count:43", 2d, $"InventorySource.Count: returns {returnedAt43} (line 43)"); return returnedAt43; }
     }
 
     public override int Take(string sharedName, string itemPrefab, int amount)
     {
+        if (RuleLog.IsOn()) ModLog.Every("InventorySource.Take", 2d, $"InventorySource.Take(sharedName={sharedName}, itemPrefab={itemPrefab}, amount={amount})");
         var take = Mathf.Min(amount, _inv.CountItems(sharedName, -1, true));
-        if (take <= 0) return 0;
+        if (take <= 0) { if (RuleLog.IsOn()) ModLog.Every("InventorySource.Take:50", 2d, $"InventorySource.Take: returns 0 (line 50) - inputs (sharedName={sharedName}, itemPrefab={itemPrefab}, amount={amount})"); return 0; }
         if (_cont != null) _cont.GetComponent<ZNetView>().ClaimOwnership();
         _inv.RemoveItem(sharedName, take, -1, true);
-        return take;
+        { var returnedAt53 = take; if (RuleLog.IsOn()) ModLog.Every("InventorySource.Take:53", 2d, $"InventorySource.Take: returns {returnedAt53} (line 53)"); return returnedAt53; }
     }
 }

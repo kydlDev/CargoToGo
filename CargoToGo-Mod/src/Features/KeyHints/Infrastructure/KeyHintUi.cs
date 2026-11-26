@@ -5,6 +5,7 @@ using KydlCore.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using CargoToGo.Core;
 
 namespace CargoToGo.Features.KeyHints.Infrastructure;
 
@@ -21,25 +22,26 @@ internal static class KeyHintUi
 
     public static void Tick(global::KeyHints kh)
     {
-        if (_disabled || kh == null) return;
+        if (_disabled || kh == null) { if (RuleLog.IsOn()) ModLog.Every("KeyHintUi.Tick:25", 2d, $"KeyHintUi.Tick: no hints (line 25) - disabled {_disabled}, kh {kh != null}"); return; }
         try
         {
             var bh = kh.m_buildHints;
-            if (bh == null) return;
+            if (bh == null) { if (RuleLog.IsOn()) ModLog.Every("KeyHintUi.Tick:29", 2d, $"KeyHintUi.Tick: no hints (line 29) - disabled {_disabled}, kh {kh != null}"); return; }
 
             var want = ModSettings.On && ModSettings.ShowKeyHints.Value && bh.activeInHierarchy && !ZInput.IsGamepadActive();
             if (_row == null || _builtFor != kh)
             {
-                if (!want) return;
+                if (!want) { if (RuleLog.IsOn()) ModLog.Every("KeyHintUi.Tick:34", 2d, $"KeyHintUi.Tick: no hints (line 34) - disabled {_disabled}, kh {kh != null}"); return; }
                 if (_row != null) UnityEngine.Object.Destroy(_row);
-                if (!Build(kh)) { _disabled = true; return; }
+                if (!Build(kh)) { _disabled = true; { if (RuleLog.IsOn()) ModLog.Every("KeyHintUi.Tick:36", 2d, $"KeyHintUi.Tick: no hints (line 36) - disabled {_disabled}, kh {kh != null}"); return; } }
             }
             if (_row.activeSelf != want) _row.SetActive(want);
-            if (!want) return;
+            if (!want) { if (RuleLog.IsOn()) ModLog.Every("KeyHintUi.Tick:39", 2d, $"KeyHintUi.Tick: no hints (line 39) - disabled {_disabled}, kh {kh != null}"); return; }
 
             _packHint.SetActive(ModSettings.PackInWorld.Value);
             Position(bh);
             if (Time.frameCount - _lastRefresh > 60) { _lastRefresh = Time.frameCount; RefreshKeys(); }
+            if (RuleLog.IsOn()) ModLog.Every("KeyHintUi.Tick", 5d, $"KeyHintUi.Tick: showing the key hints (pack hint {ModSettings.PackInWorld.Value}, last key refresh frame {_lastRefresh})");
         }
         catch (Exception e)
         {
@@ -68,7 +70,7 @@ internal static class KeyHintUi
         if (label == null)
         {
             var any = bh.GetComponentsInChildren<TMP_Text>(true);
-            if (any.Length == 0) { ModLog.Warn("Key hint bar: no TextMeshPro text found under the build hints; hints not added."); return false; }
+            if (any.Length == 0) { ModLog.Warn("Key hint bar: no TextMeshPro text found under '" + bh.name + "'; hints not added."); return false; }
             label = key = any[0];
         }
 
@@ -115,6 +117,7 @@ internal static class KeyHintUi
 
     private static Transform FindHintRoot(Transform root)
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"KeyHintUi.FindHintRoot(root={root})");
         // Breadth-first walk (List + index instead of Queue<T>, which fails to resolve against the game reference set).
         var q = new List<Transform>();
         foreach (Transform c in root) q.Add(c);
@@ -122,10 +125,10 @@ internal static class KeyHintUi
         {
             var t = q[i];
             if (!t.gameObject.activeInHierarchy) continue;
-            if (t.GetComponentsInChildren<TMP_Text>(false).Length == 2) return t;
+            if (t.GetComponentsInChildren<TMP_Text>(false).Length == 2) { var returnedAt127 = t; if (RuleLog.IsOn()) ModLog.Verbose($"KeyHintUi.FindHintRoot: returns {returnedAt127} (line 127)"); return returnedAt127; }
             foreach (Transform c in t) q.Add(c);
         }
-        return null;
+        { if (RuleLog.IsOn()) ModLog.Verbose($"KeyHintUi.FindHintRoot: returns null (line 130) - inputs (root={root})"); return null; }
     }
 
     /// <summary>How a hint looks: the text styles copied from the game's own hints, their sizes and the chip background.</summary>
@@ -133,6 +136,7 @@ internal static class KeyHintUi
     {
         internal HintStyle(TMP_Text labelStyle, TMP_Text keyStyle, float labelSize, float keySize, Image chipImg)
         {
+            if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.HintStyle(labelStyle={labelStyle}, keyStyle={keyStyle}, labelSize={labelSize}, keySize={keySize}, chipImg={chipImg})");
             LabelStyle = labelStyle; KeyStyle = keyStyle; LabelSize = labelSize; KeySize = keySize; ChipImg = chipImg;
         }
         internal TMP_Text LabelStyle { get; }
@@ -144,6 +148,7 @@ internal static class KeyHintUi
 
     private static GameObject AddHint(string name, HintStyle style, string labelText, string keyText, out TMP_Text keyOut)
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.AddHint(name={name}, style={style}, labelText={labelText}, keyText={keyText})");
         var labelStyle = style.LabelStyle; var keyStyle = style.KeyStyle;
         var labelSize = style.LabelSize; var keySize = style.KeySize; var chipImg = style.ChipImg;
         var hint = NewObj("Hint_" + name, _row.transform);
@@ -173,7 +178,7 @@ internal static class KeyHintUi
         Spacer(chip.transform, 12f);
 
         keyOut = k;
-        return hint;
+        { var returnedAt180 = hint; if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.AddHint: returns {returnedAt180} (line 180)"); return returnedAt180; }
     }
 
     /// <summary>The point size a TMP text is really drawn with (handles auto-sizing).</summary>
@@ -184,7 +189,7 @@ internal static class KeyHintUi
             t.ForceMeshUpdate(false, false);
             var ti = t.textInfo;
             if (ti != null && ti.characterCount > 0 && ti.characterInfo != null && ti.characterInfo.Length > 0 && ti.characterInfo[0].pointSize > 1f)
-                return ti.characterInfo[0].pointSize;
+                { var returnedAt191 = ti.characterInfo[0].pointSize; if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.EffectiveSize: returns {returnedAt191} (line 191)"); return returnedAt191; }
         }
         catch (Exception e) { ModLog.Verbose("EffectiveSize failed: " + e.Message); }
         return t.enableAutoSizing ? t.fontSizeMax : t.fontSize;
@@ -192,14 +197,16 @@ internal static class KeyHintUi
 
     private static GameObject NewObj(string name, Transform parent)
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.NewObj(name={name}, parent={parent})");
         var go = new GameObject(name, typeof(RectTransform));
         go.layer = _row.layer;
         go.transform.SetParent(parent, false);
-        return go;
+        { var returnedAt203 = go; if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.NewObj: returns {returnedAt203} (line 203)"); return returnedAt203; }
     }
 
     private static void Spacer(Transform parent, float width)
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.Spacer(parent={parent}, width={width})");
         var s = NewObj("Spacer", parent);
         var le = s.AddComponent<LayoutElement>();
         le.minWidth = le.preferredWidth = width;
@@ -207,6 +214,7 @@ internal static class KeyHintUi
 
     private static TMP_Text NewText(string name, Transform parent, TMP_Text style, float size)
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.NewText(name={name}, parent={parent}, style={style}, size={size})");
         var go = NewObj(name, parent);
         var t = go.AddComponent<TextMeshProUGUI>();
         t.font = style.font;
@@ -220,15 +228,16 @@ internal static class KeyHintUi
         t.overflowMode = TextOverflowModes.Overflow;
         t.richText = false;
         t.raycastTarget = false;
-        return t;
+        { var returnedAt230 = t; if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.NewText: returns {returnedAt230} (line 230)"); return returnedAt230; }
     }
 
     // ------------------------------------------------------------------ placement / text
     /// <summary>Row sits centred directly above whatever the vanilla build hint bar currently occupies.</summary>
     private static void Position(GameObject buildHints)
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.Position(buildHints={buildHints})");
         var texts = buildHints.GetComponentsInChildren<TMP_Text>(false);
-        if (texts.Length == 0) return;
+        if (texts.Length == 0) { if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.Position: returns (line 239) - inputs (buildHints={buildHints})"); return; }
         float minX = float.MaxValue, maxX = float.MinValue, minY = float.MaxValue, maxY = float.MinValue;
         var c = new Vector3[4];
         foreach (var t in texts)
@@ -255,7 +264,7 @@ internal static class KeyHintUi
                 if (!string.IsNullOrEmpty(s))
                 {
                     s = Localization.instance.Localize(s);
-                    if (!string.IsNullOrEmpty(s) && !s.StartsWith("$") && !s.StartsWith("[")) return s;
+                    if (!string.IsNullOrEmpty(s) && !s.StartsWith("$") && !s.StartsWith("[")) { var returnedAt266 = s; if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.BoundKey: returns {returnedAt266} (line 266)"); return returnedAt266; }
                 }
             }
         }
@@ -268,6 +277,7 @@ internal static class KeyHintUi
 
     private static void RefreshKeys()
     {
+        if (RuleLog.IsOn()) ModLog.Every("HintStyle.RefreshKeys", 2d, $"HintStyle.RefreshKeys: pack '{PackKeys()}', repack '{RepackKeys()}'");
         var a = PackKeys(); if (_packKey.text != a) _packKey.text = a;
         var b = RepackKeys(); if (_repackKey.text != b) _repackKey.text = b;
     }
@@ -282,7 +292,7 @@ internal static class KeyHintUi
 
     private static void Walk(Transform t, int depth, ref int lines)
     {
-        if (lines++ > 150) return;
+        if (lines++ > 150) { if (RuleLog.IsOn()) ModLog.Verbose($"HintStyle.Walk: returns (line 294) - inputs (t={t}, depth={depth}, lines={lines})"); return; }
         var tmp = t.GetComponent<TMP_Text>();
         var comps = new List<string>();
         foreach (var c in t.GetComponents<Component>()) if (c != null) comps.Add(c.GetType().Name);

@@ -7,6 +7,7 @@ using KydlCore.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using CargoToGo.Core;
 
 namespace CargoToGo.Features.CargoTab.Infrastructure;
 
@@ -47,7 +48,7 @@ internal sealed class CargoPieceList : IPieceList
             var player = Player.m_localPlayer;
             var names = CargoTab.CargoPieceNames(player != null ? player.GetInventory() : null);
             CargoTab.LastSignature = CargoTab.Signature(names);   // so the poller only refreshes on real changes
-            if (names.Count == 0 || pieceTable == null || pieceTable.m_pieces == null || pieceTable.m_availablePieces == null) return;
+            if (names.Count == 0 || pieceTable == null || pieceTable.m_pieces == null || pieceTable.m_availablePieces == null) { if (RuleLog.IsOn()) ModLog.Verbose($"CargoPieceList.GetAvailablePiecesWithTag: returns (line 51) - inputs (tagId={tagId}, pieceTable={pieceTable}, resultOut={resultOut})"); return; }
 
             // Walk the table in its own order so the tab looks like the "Show All" list of the hammer.
             foreach (var go in pieceTable.m_pieces)
@@ -87,32 +88,34 @@ internal static class CargoTab
     /// <summary>Distinct piece prefab names of every cargo in the inventory (first-seen order).</summary>
     public static List<string> CargoPieceNames(Inventory inv)
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"CargoTab.CargoPieceNames(inv={inv})");
         var list = new List<string>();
-        if (inv == null) return list;
+        if (inv == null) { var returnedAt93 = list; if (RuleLog.IsOn()) ModLog.Verbose($"CargoTab.CargoPieceNames: returns {returnedAt93} (line 93)"); return returnedAt93; }
         foreach (var it in inv.GetAllItems())
         {
             if (!CargoFactory.IsCargo(it)) continue;
             var n = CargoFactory.PieceNameOf(it);
             if (!list.Contains(n)) list.Add(n);
         }
-        return list;
+        { var returnedAt100 = list; if (RuleLog.IsOn()) ModLog.Verbose($"CargoTab.CargoPieceNames: returns {returnedAt100} (line 100)"); return returnedAt100; }
     }
 
     public static string Signature(List<string> names)
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"CargoTab.Signature(names={names})");
         var copy = new List<string>(names);
         copy.Sort(StringComparer.Ordinal);
-        return string.Join("|", copy.ToArray());
+        { var returnedAt108 = string.Join("|", copy.ToArray()); if (RuleLog.IsOn()) ModLog.Verbose($"CargoTab.Signature: returns {returnedAt108} (line 108)"); return returnedAt108; }
     }
 
     // ------------------------------------------------------------------ install
     public static void Install(BuildUi ui)
     {
         _index = -1; _installedOn = null;
-        if (!ModSettings.On || !ModSettings.ShowCargoTab.Value) { ModLog.Info("Cargos tab disabled in the config."); return; }
+        if (!ModSettings.On || !ModSettings.ShowCargoTab.Value) { ModLog.Info("Cargos tab not added: EnableMod " + ModSettings.On + ", ShowCargoTab " + ModSettings.ShowCargoTab.Value); return; }
         if (F_Lists == null || F_TabButtons == null || F_TabContainer == null || F_TabHandler == null || M_SelectPieceList == null || M_UpdatePieceButtons == null)
         {
-            ModLog.Error("Cargos tab: BuildUi has changed (a field or method was not found); the tab was not added. Game version incompatible?");
+            ModLog.Error("Cargos tab: BuildUi has changed (found: lists " + (F_Lists != null) + ", buttons " + (F_TabButtons != null) + ", container " + (F_TabContainer != null) + ", handler " + (F_TabHandler != null) + ", SelectPieceList " + (M_SelectPieceList != null) + ", UpdatePieceButtons " + (M_UpdatePieceButtons != null) + "); the tab was not added. Game version incompatible?");
             return;
         }
 
@@ -125,7 +128,7 @@ internal static class CargoTab
             ModLog.Error("Cargos tab: build menu structure not as expected (lists=" + (lists != null) + ", buttons=" + (buttons != null ? buttons.Count : -1) + ", container=" + (container != null) + "); the tab was not added.");
             return;
         }
-        foreach (var l in lists) if (l is CargoPieceList) { ModLog.Verbose("Cargos tab already installed."); return; }
+        foreach (var l in lists) if (l is CargoPieceList) { ModLog.Verbose("Cargos tab already installed (" + lists.Count + " piece lists)."); return; }
         if (buttons.Count != lists.Count)
         {
             // Tab index == list index everywhere in vanilla. If another mod broke that, adding ours would select the wrong content.
@@ -137,7 +140,7 @@ internal static class CargoTab
         var go = UnityEngine.Object.Instantiate(template.gameObject, container);
         go.name = "CargoToGoTab";
         var btn = go.GetComponent<Button>();
-        if (btn == null) { ModLog.Error("Cargos tab: cloned tab has no Button; aborting."); UnityEngine.Object.Destroy(go); return; }
+        if (btn == null) { ModLog.Error("Cargos tab: cloned tab '" + go.name + "' has no Button; aborting."); UnityEngine.Object.Destroy(go); return; }
 
         // The clone must not re-localize itself back to "Favorites", so drop its Localize components first.
         foreach (var loc in go.GetComponentsInChildren<Localize>(true)) UnityEngine.Object.DestroyImmediate(loc);
@@ -163,7 +166,7 @@ internal static class CargoTab
             tab.m_onClick = null;
             handler.m_tabs.Add(tab);   // makes Q / E cycling and the "selected" look include the new tab
         }
-        else ModLog.Warn("Cargos tab: no TabHandler found; the tab works with the mouse but Q/E cycling and highlight may not.");
+        else ModLog.Warn("Cargos tab: no TabHandler (handler " + (handler != null) + ", tab " + index + "); the tab works with the mouse but Q/E cycling and highlight may not.");
 
         _index = index; _installedOn = ui;
         ReLayout(container);
@@ -178,7 +181,7 @@ internal static class CargoTab
             var tabs = new List<RectTransform>();
             foreach (Transform c in container) { var rt = c as RectTransform; if (rt != null && rt.gameObject.activeSelf) tabs.Add(rt); }
             var n = tabs.Count;
-            if (n < 2) return;
+            if (n < 2) { if (RuleLog.IsOn()) ModLog.Every("CargoTab.ReLayout:184", 2d, $"CargoTab.ReLayout: returns (line 184) - inputs (container={container})"); return; }
 
             var glg = container.GetComponent<GridLayoutGroup>();
             var hlg = container.GetComponent<HorizontalLayoutGroup>();
@@ -203,9 +206,9 @@ internal static class CargoTab
             else if (anyLayout == null)
             {
                 // Hand-placed tabs: spread all of them evenly over the span the original ones covered.
-                tabs.Sort(delegate (RectTransform a, RectTransform b) { return LocalLeft(container, a).CompareTo(LocalLeft(container, b)); });
+                tabs.Sort(delegate (RectTransform a, RectTransform b) { { var returnedAt209 = LocalLeft(container, a).CompareTo(LocalLeft(container, b)); if (RuleLog.IsOn()) ModLog.Every("CargoTab.ReLayout:209", 2d, $"CargoTab.ReLayout: returns {returnedAt209} (line 209)"); return returnedAt209; } });
                 // the clone was appended last; keep it last even if it sits on top of another tab
-                var clone = tabs.Find(delegate (RectTransform r) { return r.gameObject.name == "CargoToGoTab"; });
+                var clone = tabs.Find(delegate (RectTransform r) { { var returnedAt211 = r.gameObject.name == "CargoToGoTab"; if (RuleLog.IsOn()) ModLog.Every("CargoTab.ReLayout:211", 2d, $"CargoTab.ReLayout: returns {returnedAt211} (line 211)"); return returnedAt211; } });
                 if (clone != null) { tabs.Remove(clone); tabs.Add(clone); }
 
                 var first = tabs[0];
@@ -226,25 +229,26 @@ internal static class CargoTab
     /// <summary>Left edge of a rect, measured in the container's local space from the container's left edge.</summary>
     private static float LocalLeft(RectTransform container, RectTransform rt)
     {
+        if (RuleLog.IsOn()) ModLog.Every("CargoTab.LocalLeft", 2d, $"CargoTab.LocalLeft(container={container}, rt={rt})");
         var corners = new Vector3[4];
         rt.GetWorldCorners(corners);
-        return container.InverseTransformPoint(corners[0]).x - container.rect.xMin;
+        { var returnedAt235 = container.InverseTransformPoint(corners[0]).x - container.rect.xMin; if (RuleLog.IsOn()) ModLog.Every("CargoTab.LocalLeft:235", 2d, $"CargoTab.LocalLeft: returns {returnedAt235} (line 235)"); return returnedAt235; }
     }
 
     // ------------------------------------------------------------------ live refresh
     /// <summary>Called every frame from BuildUi.Update. Cheap: only polls the inventory ~5x per second while the Cargos tab is shown.</summary>
     public static void Tick(BuildUi ui)
     {
-        if (_index < 0 || ui == null || _installedOn != ui) return;
-        if (Time.unscaledTime < _nextPoll) return;
+        if (_index < 0 || ui == null || _installedOn != ui) { if (RuleLog.IsOn()) ModLog.Verbose($"CargoTab.Tick: returns (line 242) - inputs (ui={ui})"); return; }
+        if (Time.unscaledTime < _nextPoll) { if (RuleLog.IsOn()) ModLog.Verbose($"CargoTab.Tick: returns (line 243) - inputs (ui={ui})"); return; }
         _nextPoll = Time.unscaledTime + 0.2f;
         try
         {
-            if (F_CurrentList == null || Convert.ToInt32(F_CurrentList.GetValue(ui)) != _index) return;
+            if (F_CurrentList == null || Convert.ToInt32(F_CurrentList.GetValue(ui)) != _index) { if (RuleLog.IsOn()) ModLog.Verbose($"CargoTab.Tick: returns (line 247) - inputs (ui={ui})"); return; }
             var player = Player.m_localPlayer;
-            if (player == null) return;
+            if (player == null) { if (RuleLog.IsOn()) ModLog.Verbose($"CargoTab.Tick: returns (line 249) - inputs (ui={ui})"); return; }
             var sig = Signature(CargoPieceNames(player.GetInventory()));
-            if (sig == LastSignature) return;
+            if (sig == LastSignature) { if (RuleLog.IsOn()) ModLog.Verbose($"CargoTab.Tick: returns (line 251) - inputs (ui={ui})"); return; }
             ModLog.Verbose("Cargos tab: inventory cargos changed ('" + LastSignature + "' -> '" + sig + "'), rebuilding the grid.");
             LastSignature = sig;
             M_UpdatePieceButtons.Invoke(ui, null);   // rebuilds the grid via CargoPieceList (which also stores the new signature)

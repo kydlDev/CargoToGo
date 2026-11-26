@@ -5,7 +5,7 @@ using KydlCore.Common;
 
 namespace CargoToGo.Integrations.Harmony;
 
-// MIGRATION_DECISIONS A5: every Harmony patch lives in src/Integrations/Harmony. Registration: the cargo prefabs exist in every ObjectDB / ZNetScene (Priority.Last, after the other mods add their pieces).
+// MIGRATION_PLAN A5: every Harmony patch lives in src/Integrations/Harmony. Registration: the cargo prefabs exist in every ObjectDB / ZNetScene (Priority.Last, after the other mods add their pieces).
 // ---------------------------------------------------------------- registration
 [HarmonyPatch(typeof(ObjectDB), "Awake"), HarmonyPriority(Priority.Last)]
 internal static class ObjectDB_Awake { private static void Postfix(ObjectDB __instance) { try { CargoFactory.Ensure(__instance); } catch (Exception e) { ModLog.Error("ObjectDB.Awake hook failed" + " | " + e); } } }

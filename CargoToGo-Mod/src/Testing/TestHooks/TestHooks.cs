@@ -12,7 +12,7 @@ namespace CargoToGo.Testing.TestHooks;
 /// </summary>
 internal static class TestHooks
 {
-    /// <summary>Every test starts here (MIGRATION_DECISIONS C26): the player moves to the shared open arena spot.</summary>
+    /// <summary>Every test starts here (MIGRATION_PLAN C26): the player moves to the shared open arena spot.</summary>
     [TestHook("CargoToGo.arena")]
     static string Arena() { return TestArena.MovePlayer(); }
 

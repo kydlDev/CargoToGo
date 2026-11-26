@@ -4,10 +4,11 @@ using CargoToGo.Features.Packing.Infrastructure;
 using HarmonyLib;
 using KydlCore.Common;
 using UnityEngine;
+using CargoToGo.Core;
 
 namespace CargoToGo.Integrations.Harmony;
 
-// MIGRATION_DECISIONS A5: every Harmony patch lives in src/Integrations/Harmony. ALT + destroy turns a piece back into a cargo (feature Repack: [Repack] Enable).
+// MIGRATION_PLAN A5: every Harmony patch lives in src/Integrations/Harmony. ALT + destroy turns a piece back into a cargo (feature Repack: [Repack] Enable).
 // ---------------------------------------------------------------- ALT + destroy -> back into a cargo
 [HarmonyPatch(typeof(Player), "RemovePiece")]
 internal static class Player_RemovePiece
@@ -20,10 +21,10 @@ internal static class Player_RemovePiece
         Pending = null;
         try
         {
-            if (!ModSettings.On || !ModSettings.Repack.Value || __instance != Player.m_localPlayer || !Packer.Alt) return true;
+            if (!ModSettings.On || !ModSettings.Repack.Value || __instance != Player.m_localPlayer || !Packer.Alt) { if (RuleLog.IsOn()) ModLog.Every("Player_RemovePiece.Prefix:24", 2d, $"Player_RemovePiece.Prefix: returns true (line 24) - inputs (__instance={__instance})"); return true; }
             var piece = __instance.GetHoveringPiece();
-            if (piece == null) return true;
-            if (!Packer.IsBuiltFromCargo(piece) && !ModSettings.AltDestroyAnyPiece.Value) return true;
+            if (piece == null) { if (RuleLog.IsOn()) ModLog.Every("Player_RemovePiece.Prefix:26", 2d, $"Player_RemovePiece.Prefix: returns true (line 26) - inputs (__instance={__instance})"); return true; }
+            if (!Packer.IsBuiltFromCargo(piece) && !ModSettings.AltDestroyAnyPiece.Value) { if (RuleLog.IsOn()) ModLog.Every("Player_RemovePiece.Prefix:27", 2d, $"Player_RemovePiece.Prefix: returns true (line 27) - inputs (__instance={__instance})"); return true; }
             if (CargoFactory.GetCargoPrefab(piece) == null) { ModLog.Warn("ALT-destroy of '" + Utils.GetPrefabName(piece.gameObject) + "': no cargo prefab exists, using normal destroy."); return true; }
             if (!__instance.GetInventory().HaveEmptySlot())
             {
@@ -32,7 +33,7 @@ internal static class Player_RemovePiece
                 return false;
             }
             var nv = piece.GetComponent<ZNetView>();
-            if (nv == null || !nv.IsValid()) return true;
+            if (nv == null || !nv.IsValid()) { if (RuleLog.IsOn()) ModLog.Every("Player_RemovePiece.Prefix:36", 2d, $"Player_RemovePiece.Prefix: returns true (line 36) - inputs (__instance={__instance})"); return true; }
             nv.ClaimOwnership();            // so the removal runs on this machine
             Pending = piece;
             PendingTime = Time.time;
@@ -52,7 +53,7 @@ internal static class Piece_DropResources
         try
         {
             var pending = Player_RemovePiece.Pending;
-            if (pending == null || !ReferenceEquals(pending, __instance)) return true;
+            if (pending == null || !ReferenceEquals(pending, __instance)) { if (RuleLog.IsOn()) ModLog.Every("Piece_DropResources.Prefix:56", 2d, $"Piece_DropResources.Prefix: returns true (line 56) - inputs (__instance={__instance})"); return true; }
             Player_RemovePiece.Pending = null;
             var pieceName = Utils.GetPrefabName(__instance.gameObject);
             if (Packer.FreeKeyActive(__instance)) { ModLog.Verbose("Repack of '" + pieceName + "' skipped: free-build world key is active, vanilla drops nothing."); return true; }
@@ -64,7 +65,7 @@ internal static class Piece_DropResources
 
             var p = Player.m_localPlayer;
             var prefab = CargoFactory.GetCargoPrefab(__instance);
-            if (p == null || prefab == null) return true;
+            if (p == null || prefab == null) { if (RuleLog.IsOn()) ModLog.Every("Piece_DropResources.Prefix:68", 2d, $"Piece_DropResources.Prefix: returns true (line 68) - inputs (__instance={__instance})"); return true; }
             var cargo = prefab.GetComponent<ItemDrop>().m_itemData.Clone();
             cargo.m_dropPrefab = prefab;
             cargo.m_stack = 1;

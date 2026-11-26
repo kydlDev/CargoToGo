@@ -1,10 +1,11 @@
 using BepInEx.Configuration;
 using CargoToGo.Bootstrap;
 using KydlCore.Common;
+using CargoToGo.Core;
 
 namespace CargoToGo.Presentation.Hub.Registration;
 
-/// <summary>What CargoToGo declares to the KY hub (F6, MIGRATION_DECISIONS B11): its title and its settings tab (every config entry).</summary>
+/// <summary>What CargoToGo declares to the KY hub (F6, MIGRATION_PLAN B11): its title and its settings tab (every config entry).</summary>
 internal static class HubTabs
 {
     internal const string SettingsId = "settings";
@@ -19,7 +20,8 @@ internal static class HubTabs
 
     internal static bool UnregisterModPage()
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"HubTabs.UnregisterModPage: removing tab {SettingsId} of {CargoToGoPlugin.ModGuid}");
         global::KydlCore.Features.Hub.Contracts.KyHub.RemoveTab(CargoToGoPlugin.ModGuid, SettingsId);
-        return !global::KydlCore.Features.Hub.Contracts.KyHub.HasTab(CargoToGoPlugin.ModGuid, SettingsId);
+        { var returnedAt25 = !global::KydlCore.Features.Hub.Contracts.KyHub.HasTab(CargoToGoPlugin.ModGuid, SettingsId); if (RuleLog.IsOn()) ModLog.Verbose($"HubTabs.UnregisterModPage: returns {returnedAt25} (line 25)"); return returnedAt25; }
     }
 }

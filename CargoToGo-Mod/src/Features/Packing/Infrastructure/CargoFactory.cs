@@ -5,6 +5,7 @@ using CargoToGo.Features.Packing.Domain;
 using HarmonyLib;
 using KydlCore.Common;
 using UnityEngine;
+using CargoToGo.Core;
 
 namespace CargoToGo.Features.Packing.Infrastructure;
 
@@ -19,18 +20,19 @@ internal static class CargoFactory
 
     private static GameObject Holder()
     {
+        if (RuleLog.IsOn()) ModLog.Every("CargoFactory.Holder", 2d, $"CargoFactory.Holder: holder exists {_holder != null}");
         if (_holder == null)
         {
             _holder = new GameObject("CargoToGoPrefabs");
             _holder.SetActive(false);
             Object.DontDestroyOnLoad(_holder);
         }
-        return _holder;
+        { var returnedAt30 = _holder; if (RuleLog.IsOn()) ModLog.Every("CargoFactory.Holder:30", 2d, $"CargoFactory.Holder: returns {returnedAt30} (line 30)"); return returnedAt30; }
     }
 
     public static void Ensure(ObjectDB db)
     {
-        if (db == null || db.m_items == null || db.m_items.Count == 0) return;
+        if (db == null || db.m_items == null || db.m_items.Count == 0) { if (RuleLog.IsOn()) ModLog.Verbose($"CargoFactory.Ensure: returns (line 35) - inputs (db={db})"); return; }
 
         var existing = new HashSet<string>();
         var existingCargo = new Dictionary<string, GameObject>();
@@ -44,7 +46,7 @@ internal static class CargoFactory
             else if (CargoNames.IsCargo(go.name)) existingCargo[go.name] = go;
         }
         if (basePrefab == null) basePrefab = fallback;
-        if (basePrefab == null) { ModLog.Error("Neither 'CargoCrate' nor 'Stone' found in ObjectDB; no cargo items were registered."); return; }
+        if (basePrefab == null) { ModLog.Error("Neither 'CargoCrate' nor 'Stone' found in ObjectDB (" + existingCargo.Count + " cargo prefabs seen); no cargo items were registered."); return; }
         if (basePrefab.name != "CargoCrate") ModLog.Warn("Prefab 'CargoCrate' not found, using '" + basePrefab.name + "' as the cargo base.");
 
         var added = 0;
@@ -79,7 +81,7 @@ internal static class CargoFactory
         if (added > 0)
         {
             var upd = AccessTools.Method(typeof(ObjectDB), "UpdateRegisters");
-            if (upd == null) ModLog.Error("ObjectDB.UpdateRegisters not found; new cargo items may not be resolvable.");
+            if (upd == null) ModLog.Error("ObjectDB.UpdateRegisters not found; " + added + " new cargo items may not be resolvable.");
             else upd.Invoke(db, null);
             ModLog.Info("Registered " + added + " new cargo items in ObjectDB (cloned from '" + basePrefab.name + "'); " + RestrictedCount + " of them contain materials that can't pass through portals.");
         }
@@ -132,7 +134,7 @@ internal static class CargoFactory
         sd.m_canBeReparied = false;
         drop.m_itemData.m_dropPrefab = clone;
         db.m_items.Add(clone);
-        return true;
+        { if (RuleLog.IsOn()) ModLog.Every("CargoFactory.Create:137", 2d, $"CargoFactory.Create: returns true (line 137) - inputs (db={db}, basePrefab={basePrefab}, cname={cname}, piece={piece})"); return true; }
     }
 
     // ---------- portal rules ----------
@@ -141,15 +143,16 @@ internal static class CargoFactory
     /// because it reads the live flag instead of a hard-coded list. Unknown piece -> false (fail closed).</summary>
     public static bool ContentsTeleportable(Piece piece, out string blocker)
     {
+        if (RuleLog.IsOn()) ModLog.Every("CargoFactory.ContentsTeleportable", 2d, $"CargoFactory.ContentsTeleportable(piece={piece})");
         blocker = null;
-        if (piece == null || piece.m_resources == null) { blocker = "(unknown contents)"; return false; }
+        if (piece == null || piece.m_resources == null) { blocker = "(unknown contents)"; { if (RuleLog.IsOn()) ModLog.Every("CargoFactory.ContentsTeleportable:148", 2d, $"CargoFactory.ContentsTeleportable: returns false (line 148) - inputs (piece={piece})"); return false; } }
         foreach (var r in piece.m_resources)
         {
             if (r.m_resItem == null || r.m_amount <= 0) continue;
             var sd = r.m_resItem.m_itemData.m_shared;
-            if (!sd.m_teleportable) { blocker = sd.m_name; return false; }
+            if (!sd.m_teleportable) { blocker = sd.m_name; { if (RuleLog.IsOn()) ModLog.Every("CargoFactory.ContentsTeleportable:153", 2d, $"CargoFactory.ContentsTeleportable: returns false (line 153) - inputs (piece={piece})"); return false; } }
         }
-        return true;
+        { if (RuleLog.IsOn()) ModLog.Every("CargoFactory.ContentsTeleportable:155", 2d, $"CargoFactory.ContentsTeleportable: returns true (line 155) - inputs (piece={piece})"); return true; }
     }
 
     /// <summary>Re-evaluates one cargo's flag from what is inside it right now. Called right before vanilla checks
@@ -168,28 +171,32 @@ internal static class CargoFactory
     // ---------- helpers ----------
     public static bool IsCargo(ItemDrop.ItemData item)
     {
-        return item != null && item.m_dropPrefab != null && CargoNames.IsCargo(item.m_dropPrefab.name);
+        if (RuleLog.IsOn()) ModLog.Every("CargoFactory.IsCargo", 2d, $"CargoFactory.IsCargo(item={item})");
+        { var returnedAt175 = item != null && item.m_dropPrefab != null && CargoNames.IsCargo(item.m_dropPrefab.name); if (RuleLog.IsOn()) ModLog.Every("CargoFactory.IsCargo:175", 2d, $"CargoFactory.IsCargo: returns {returnedAt175} (line 175)"); return returnedAt175; }
     }
 
     /// <summary>Piece prefab name of a cargo item; null when the item is not a cargo (callers check IsCargo first).</summary>
     public static string PieceNameOf(ItemDrop.ItemData item)
     {
-        return item != null && item.m_dropPrefab != null ? CargoNames.PieceOf(item.m_dropPrefab.name) : null;
+        if (RuleLog.IsOn()) ModLog.Every("CargoFactory.PieceNameOf", 2d, $"CargoFactory.PieceNameOf(item={item})");
+        { var returnedAt182 = item != null && item.m_dropPrefab != null ? CargoNames.PieceOf(item.m_dropPrefab.name) : null; if (RuleLog.IsOn()) ModLog.Every("CargoFactory.PieceNameOf:182", 2d, $"CargoFactory.PieceNameOf: returns {returnedAt182} (line 182)"); return returnedAt182; }
     }
 
     public static GameObject GetCargoPrefab(Piece piece)
     {
-        if (piece == null || ObjectDB.instance == null) return null;
-        return ObjectDB.instance.GetItemPrefab(PrefabPrefix + Utils.GetPrefabName(piece.gameObject));
+        if (RuleLog.IsOn()) ModLog.Every("CargoFactory.GetCargoPrefab", 2d, $"CargoFactory.GetCargoPrefab(piece={piece})");
+        if (piece == null || ObjectDB.instance == null) { if (RuleLog.IsOn()) ModLog.Every("CargoFactory.GetCargoPrefab:188", 2d, $"CargoFactory.GetCargoPrefab: returns null (line 188) - inputs (piece={piece})"); return null; }
+        { var returnedAt189 = ObjectDB.instance.GetItemPrefab(PrefabPrefix + Utils.GetPrefabName(piece.gameObject)); if (RuleLog.IsOn()) ModLog.Every("CargoFactory.GetCargoPrefab:189", 2d, $"CargoFactory.GetCargoPrefab: returns {returnedAt189} (line 189)"); return returnedAt189; }
     }
 
     public static ItemDrop.ItemData FindCargoFor(Inventory inv, Piece piece)
     {
-        if (inv == null || piece == null) return null;
+        if (RuleLog.IsOn()) ModLog.Every("CargoFactory.FindCargoFor", 2d, $"CargoFactory.FindCargoFor(inv={inv}, piece={piece})");
+        if (inv == null || piece == null) { if (RuleLog.IsOn()) ModLog.Every("CargoFactory.FindCargoFor:195", 2d, $"CargoFactory.FindCargoFor: returns null (line 195) - inputs (inv={inv}, piece={piece})"); return null; }
         var want = PrefabPrefix + Utils.GetPrefabName(piece.gameObject);
         foreach (var it in inv.GetAllItems())
-            if (it.m_dropPrefab != null && it.m_dropPrefab.name == want) return it;
-        return null;
+            if (it.m_dropPrefab != null && it.m_dropPrefab.name == want) { var returnedAt198 = it; if (RuleLog.IsOn()) ModLog.Every("CargoFactory.FindCargoFor:198", 2d, $"CargoFactory.FindCargoFor: returns {returnedAt198} (line 198)"); return returnedAt198; }
+        { if (RuleLog.IsOn()) ModLog.Every("CargoFactory.FindCargoFor:199", 2d, $"CargoFactory.FindCargoFor: returns null (line 199) - inputs (inv={inv}, piece={piece})"); return null; }
     }
 
     private static readonly Dictionary<string, Piece> TablePieces = new();
@@ -199,19 +206,21 @@ internal static class CargoFactory
     /// Without that fallback those cargos could never be unpacked.</summary>
     public static Piece PrefabPieceOf(ItemDrop.ItemData cargo)
     {
+        if (RuleLog.IsOn()) ModLog.Every("CargoFactory.PrefabPieceOf", 2d, $"CargoFactory.PrefabPieceOf(cargo={cargo})");
         var name = PieceNameOf(cargo);
-        if (name == null) return null;
+        if (name == null) { if (RuleLog.IsOn()) ModLog.Every("CargoFactory.PrefabPieceOf:211", 2d, $"CargoFactory.PrefabPieceOf: returns null (line 211) - inputs (cargo={cargo})"); return null; }
         var go = ZNetScene.instance != null ? ZNetScene.instance.GetPrefab(name) : null;
         var piece = go != null ? go.GetComponent<Piece>() : null;
-        return piece != null ? piece : PieceFromTables(name);
+        { var returnedAt214 = piece != null ? piece : PieceFromTables(name); if (RuleLog.IsOn()) ModLog.Every("CargoFactory.PrefabPieceOf:214", 2d, $"CargoFactory.PrefabPieceOf: returns {returnedAt214} (line 214)"); return returnedAt214; }
     }
 
     public static Piece PieceFromTables(string pieceName)
     {
+        if (RuleLog.IsOn()) ModLog.Every("CargoFactory.PieceFromTables", 2d, $"CargoFactory.PieceFromTables(pieceName={pieceName})");
         Piece known;
-        if (TablePieces.TryGetValue(pieceName, out known) && known != null) return known;
+        if (TablePieces.TryGetValue(pieceName, out known) && known != null) { var returnedAt221 = known; if (RuleLog.IsOn()) ModLog.Every("CargoFactory.PieceFromTables:221", 2d, $"CargoFactory.PieceFromTables: returns {returnedAt221} (line 221)"); return returnedAt221; }
         var db = ObjectDB.instance;
-        if (db == null || db.m_items == null) return null;
+        if (db == null || db.m_items == null) { if (RuleLog.IsOn()) ModLog.Every("CargoFactory.PieceFromTables:223", 2d, $"CargoFactory.PieceFromTables: returns null (line 223) - inputs (pieceName={pieceName})"); return null; }
         foreach (var item in db.m_items)
         {
             var drop = item != null ? item.GetComponent<ItemDrop>() : null;
@@ -221,9 +230,9 @@ internal static class CargoFactory
             {
                 if (pg == null || Utils.GetPrefabName(pg) != pieceName) continue;
                 var piece = pg.GetComponent<Piece>();
-                if (piece != null) { TablePieces[pieceName] = piece; return piece; }
+                if (piece != null) { TablePieces[pieceName] = piece; { var returnedAt233 = piece; if (RuleLog.IsOn()) ModLog.Every("CargoFactory.PieceFromTables:233", 2d, $"CargoFactory.PieceFromTables: returns {returnedAt233} (line 233)"); return returnedAt233; } }
             }
         }
-        return null;
+        { if (RuleLog.IsOn()) ModLog.Every("CargoFactory.PieceFromTables:236", 2d, $"CargoFactory.PieceFromTables: returns null (line 236) - inputs (pieceName={pieceName})"); return null; }
     }
 }

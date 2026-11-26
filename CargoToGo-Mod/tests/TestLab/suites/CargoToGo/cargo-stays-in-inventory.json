@@ -1,53 +1,62 @@
 {
-    "name":  "cargo-stays-in-inventory",
-    "description":  "A cargo cannot be put into a chest: the chest refuses it and the cargo stays with the player",
-    "timeout":  90,
-    "steps":  [
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.arena",
-                      "contains":  "arena at"
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.giveMaterials",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "contains":  "gave"
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.pack",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "expect":  true
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.cargoIntoChest",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "expect":  false
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.cargoCount",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "expect":  1
-                  },
-                  {
-                      "do":  "hook",
-                      "name":  "CargoToGo.unpack",
-                      "args":  {
-                                   "piece":  "wood_floor"
-                               },
-                      "expect":  true
-                  }
-              ],
-    "asserts":  [ { "check": "noErrors", "source": "CargoToGo" } ]
+  "name": "cargo-stays-in-inventory",
+  "description": "A cargo cannot be put into a chest: the chest refuses it and the cargo stays with the player",
+  "timeout": 90,
+  "steps": [
+    {
+      "do": "hook",
+      "name": "CargoToGo.arena",
+      "contains": "arena at"
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.giveMaterials",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "contains": "gave"
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.pack",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "expect": true
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.cargoIntoChest",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "expect": false
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.cargoCount",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "expect": 1
+    },
+    {
+      "do": "hook",
+      "name": "CargoToGo.unpack",
+      "args": {
+        "piece": "wood_floor"
+      },
+      "expect": true
+    },
+    {
+      "do": "console",
+      "command": "killall"
+    }
+  ],
+  "asserts": [
+    {
+      "check": "noErrors",
+      "source": "CargoToGo"
+    }
+  ]
 }

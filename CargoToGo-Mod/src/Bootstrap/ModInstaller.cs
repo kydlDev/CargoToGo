@@ -11,7 +11,7 @@ using KydlCore.Core;
 
 namespace CargoToGo.Bootstrap;
 
-/// <summary>Composition root: the mod's KY hub page (title + settings tab) and its features in the FeatureRegistry (MIGRATION_DECISIONS A4).</summary>
+/// <summary>Composition root: the mod's KY hub page (title + settings tab) and its features in the FeatureRegistry (MIGRATION_PLAN A4).</summary>
 internal sealed class ModInstaller
 {
     internal static ModInstaller Current { get; private set; }
@@ -29,7 +29,7 @@ internal sealed class ModInstaller
             OperationResponse<int> add = Features.Add(feature);
             if (!add.IsSuccess) { added = false; ModLog.Error("ModInstaller: " + add.Reason); }
         }
-        return page && added && Refresh();
+        { var returnedAt32 = page && added && Refresh(); if (RuleLog.IsOn()) ModLog.Every("ModInstaller.Install:32", 2d, $"ModInstaller.Install: returns {returnedAt32} (line 32)"); return returnedAt32; }
     }
 
     internal bool Refresh()
@@ -41,9 +41,10 @@ internal sealed class ModInstaller
 
     internal bool Uninstall()
     {
+        if (RuleLog.IsOn()) ModLog.Verbose($"ModInstaller.Uninstall: stopping the features and the hub page of {CargoToGoPlugin.ModGuid}");
         OperationResponse<int> r = Features.StopAll();
         bool gone = HubTabs.UnregisterModPage();
         if (Current == this) Current = null;
-        return r.IsSuccess && gone;
+        { var returnedAt48 = r.IsSuccess && gone; if (RuleLog.IsOn()) ModLog.Verbose($"ModInstaller.Uninstall: returns {returnedAt48} (line 48)"); return returnedAt48; }
     }
 }
